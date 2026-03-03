@@ -4,126 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Contact Us — Synapse Edge</title>
-  <meta name="description" content="Request an executive growth audit or contact Synapse Edge for B2B revenue strategy." />
+  <title>Contact Us | Synapse Edge</title>
+  <meta name="description" content="Request an Executive Growth Audit or send a message to Synapse Edge. We respond within one business day." />
   <link rel="canonical" href="https://www.synapseedge.com/contact.html" />
+
+  <meta property="og:title" content="Contact Synapse Edge" />
+  <meta property="og:description" content="Request an Executive Growth Audit or send a message. Response within one business day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.synapseedge.com/contact.html" />
+
+  <link rel="icon" href="/assets/favicon.ico" />
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"Synapse Edge","url":"https://synapseedge.com","logo":"/assets/logo.svg","sameAs":[]}
+  </script>
 
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Page-specific layout tweaks (keeps your global styles intact) -->
+  <!-- Small page-specific helper styles ONLY (keeps global look) -->
   <style>
-    .contact-hero-tight { padding: 56px 0 24px; }
-    .contact-hero-tight .container { max-width: 1100px; }
-    .contact-hero-tight h1 { margin: 10px 0 10px; }
-    .contact-hero-tight p { max-width: 780px; }
+    /* Keep the contact form from looking too tall */
+    .contact-form-card textarea { min-height: 120px; }
 
-    .contact-split {
-      padding: 28px 0 80px;
-    }
-    .contact-split .container { max-width: 1100px; }
-
-    .contact-panel {
-      background: #F3F6FB;
-      border-radius: 22px;
-      padding: 34px;
-      display: grid;
-      grid-template-columns: 1.05fr 1.35fr;
-      gap: 34px;
-      align-items: start;
-    }
-
-    .contact-left h2 { margin: 10px 0 14px; }
-    .contact-left p { margin: 0 0 18px; }
-
-    .contact-bullets {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .contact-item {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .contact-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #E7F0FF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex: 0 0 38px;
-      margin-top: 2px;
-    }
-
-    .contact-item .label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(15, 30, 45, 0.55);
-      margin-bottom: 3px;
-    }
-    .contact-item .value a { text-decoration: none; }
-
-    .contact-right .form-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 26px;
-      border: 1px solid rgba(20, 40, 60, 0.08);
-      box-shadow: 0 10px 30px rgba(10, 20, 30, 0.06);
-    }
-
-    .contact-right h3 { margin: 0 0 8px; }
-    .contact-right .form-intro { margin: 0 0 16px; color: rgba(15, 30, 45, 0.70); }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .form-grid .full { grid-column: 1 / -1; }
-
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin: 0 0 6px;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(20, 40, 60, 0.14);
-      outline: none;
-      background: #fff;
-    }
-    .form-group textarea { resize: vertical; }
-
-    .form-actions {
-      margin-top: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
+    /* Optional: show a small status message under the button */
     .form-status {
-      font-size: 0.9rem;
+      margin-top: 10px;
+      font-size: 0.95rem;
       color: rgba(15, 30, 45, 0.75);
       min-height: 1.2em;
     }
 
-    /* Mobile */
-    @media (max-width: 900px) {
-      .contact-panel { grid-template-columns: 1fr; padding: 22px; }
-      .form-grid { grid-template-columns: 1fr; }
-    }
+    /* Make required star match your primary color variable */
+    .req { color: var(--primary); }
   </style>
 </head>
 
@@ -165,151 +76,145 @@
 <main>
 
 <!-- ═════════════════ HERO ═════════════════ -->
-<header class="page-hero contact-hero-tight" aria-labelledby="page-h1">
+<header class="page-hero" aria-labelledby="page-h1">
   <div class="container">
     <span class="eyebrow">Executive Inquiry</span>
     <h1 id="page-h1">Contact Synapse Edge</h1>
-    <p>
-      Request an Executive Growth Audit or send a quick note. We respond within one business day.
-    </p>
+    <p>Request an Executive Growth Audit or send a message. We respond within one business day.</p>
   </div>
 </header>
 
-<!-- ═════════════════ CONTACT PANEL ═════════════════ -->
-<section class="contact-split" aria-label="Contact form">
+<!-- ═════════════════ CONTACT ═════════════════ -->
+<section id="form" class="contact-section" aria-labelledby="contact-h2">
   <div class="container">
+    <div class="contact-layout">
 
-    <div class="contact-panel">
-
-      <!-- LEFT -->
-      <div class="contact-left">
+      <!-- LEFT: Info (matches your existing pattern) -->
+      <div class="contact-info fade-up">
         <span class="eyebrow">Direct Contact</span>
-        <h2>Let’s Design Your Growth Strategy</h2>
+        <h2 id="contact-h2">Let’s Architect Your Revenue System</h2>
+        <div class="rule"></div>
+
         <p>
-          If your pipeline, CRM, or visibility has structural gaps, we’ll help you identify the constraints and map a clear execution path.
+          If your pipeline, CRM, or search visibility has structural gaps, we’ll help you identify constraints and define a clear execution path.
         </p>
 
-        <div class="contact-bullets">
-          <div class="contact-item">
-            <div class="contact-icon">✉️</div>
-            <div>
-              <div class="label">Email</div>
-              <div class="value">
-                <a href="mailto:yaroslav.bogday@synapseedge.com">yaroslav.bogday@synapseedge.com</a>
-              </div>
-            </div>
+        <div class="contact-point">
+          <div class="label">Email</div>
+          <div class="value">
+            <a href="mailto:yaroslav.bogday@synapseedge.com">yaroslav.bogday@synapseedge.com</a>
           </div>
+        </div>
 
-          <div class="contact-item">
-            <div class="contact-icon">📞</div>
-            <div>
-              <div class="label">Phone</div>
-              <div class="value">
-                <a href="tel:+18782363229">878-236-3229</a>
-              </div>
-            </div>
+        <div class="contact-point">
+          <div class="label">Phone</div>
+          <div class="value">
+            <a href="tel:+18782363229">878-236-3229</a>
           </div>
+        </div>
 
-          <div class="contact-item">
-            <div class="contact-icon">⏱️</div>
-            <div>
-              <div class="label">Response Time</div>
-              <div class="value">Within one business day</div>
-            </div>
-          </div>
+        <div class="contact-point">
+          <div class="label">Response Time</div>
+          <div class="value">Within one business day.</div>
         </div>
       </div>
 
-      <!-- RIGHT -->
-      <div class="contact-right">
-        <div class="form-card">
-          <h3>Request an Executive Growth Audit</h3>
-          <p class="form-intro">
-            Name, email, and phone are required. Add a short message and we’ll follow up.
-          </p>
+      <!-- RIGHT: Form (keeps your existing card style) -->
+      <div class="contact-form-card fade-up">
+        <h3>Request an Executive Growth Audit</h3>
+        <p class="form-intro">
+          Name, email, and phone are required. Add a short message and we’ll follow up.
+        </p>
 
-          <form id="contact-form" action="https://formspree.io/f/mjgeqpvq" method="POST" novalidate>
-            <!-- Formspree -->
-            <input type="hidden" name="_subject" value="New Executive Growth Audit Request — synapseedge.com" />
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <form
+          id="contact-form"
+          action="https://formspree.io/f/mjgeqpvq"
+          method="POST"
+          novalidate
+        >
+          <!-- Formspree settings -->
+          <input type="hidden" name="_subject" value="New Executive Growth Audit Request — synapseedge.com" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
-            <div class="form-grid">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name <span class="req">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your full name"
+              autocomplete="name"
+              required
+            />
+          </div>
 
-              <div class="form-group">
-                <label for="name">Name <span style="color:var(--primary);">*</span></label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your full name"
-                  autocomplete="name"
-                  required
-                />
-              </div>
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone">Phone <span class="req">*</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="(###) ###-####"
+              autocomplete="tel"
+              required
+            />
+          </div>
 
-              <div class="form-group">
-                <label for="phone">Phone <span style="color:var(--primary);">*</span></label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="(###) ###-####"
-                  autocomplete="tel"
-                  required
-                />
-              </div>
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email <span class="req">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="your@company.com"
+              autocomplete="email"
+              required
+            />
+          </div>
 
-              <div class="form-group full">
-                <label for="email">Email <span style="color:var(--primary);">*</span></label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="your@company.com"
-                  autocomplete="email"
-                  required
-                />
-              </div>
+          <!-- Company -->
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              placeholder="Company name"
+              autocomplete="organization"
+            />
+          </div>
 
-              <div class="form-group">
-                <label for="company">Company</label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="Company name"
-                  autocomplete="organization"
-                />
-              </div>
+          <!-- Industry -->
+          <div class="form-group">
+            <label for="industry">Industry</label>
+            <input
+              type="text"
+              id="industry"
+              name="industry"
+              placeholder="e.g. Heavy Equipment, Industrial, Real Estate"
+            />
+          </div>
 
-              <div class="form-group">
-                <label for="industry">Industry</label>
-                <input
-                  type="text"
-                  id="industry"
-                  name="industry"
-                  placeholder="e.g. Heavy Equipment, Industrial, Real Estate"
-                />
-              </div>
+          <!-- Message -->
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Briefly describe what you’d like to improve."
+            ></textarea>
+          </div>
 
-              <div class="form-group full">
-                <label for="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  placeholder="Briefly describe what you’d like to improve."
-                ></textarea>
-              </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Send</button>
+            <div id="form-status" class="form-status" aria-live="polite"></div>
+          </div>
+        </form>
 
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Send</button>
-              <div id="form-status" class="form-status" aria-live="polite"></div>
-            </div>
-          </form>
-        </div>
       </div>
 
     </div>
@@ -318,7 +223,7 @@
 
 </main>
 
-<!-- ═════════════════ FOOTER (same structure as your other pages) ═════════════════ -->
+<!-- ═════════════════ FOOTER (same as other pages) ═════════════════ -->
 <footer role="contentinfo">
   <div class="container">
     <div class="footer-grid">
@@ -362,7 +267,7 @@
 
 <script src="scripts.js"></script>
 
-<!-- Formspree submit + redirect (guaranteed) -->
+<!-- Formspree submit + redirect -->
 <script>
   (function () {
     const form = document.getElementById("contact-form");
@@ -372,17 +277,19 @@
       if (statusEl) statusEl.textContent = msg || "";
     }
 
+    if (!form) return;
+
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
       setStatus("Sending...");
 
-      // Basic required checks (HTML5 should do this, but this keeps UX clear)
-      const requiredFields = ["name", "phone", "email"];
-      for (const id of requiredFields) {
+      // Ensure required fields present (HTML5 should handle too, but we keep UX consistent)
+      const requiredIds = ["name", "phone", "email"];
+      for (const id of requiredIds) {
         const el = document.getElementById(id);
         if (!el || !el.value.trim()) {
           setStatus("Please fill in all required fields.");
-          el && el.focus();
+          if (el) el.focus();
           return;
         }
       }
@@ -397,13 +304,12 @@
         });
 
         if (res.ok) {
-          // Redirect to your local thank-you page
           window.location.href = "/thank-you.html";
           return;
         }
 
         const data = await res.json().catch(() => null);
-        setStatus(data && data.error ? data.error : "Something went wrong. Please try again.");
+        setStatus((data && data.error) ? data.error : "Something went wrong. Please try again.");
       } catch (err) {
         setStatus("Network error. Please try again.");
       }
