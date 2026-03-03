@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Synapse Edge | B2B Revenue Strategy & Scalable Growth Systems | Synapse Edge</title>
-  <meta name="description" content="We help established B2B companies adapt to the digital and AI shift by aligning strategy, sales operations, CRM, and visibility into one scalable revenue system." />
+  <title>Synapse Edge | B2B Revenue Strategy, CRM & AI-Ready Growth Infrastructure</title>
+  <meta name="description" content="Your legacy website is losing authority. Your CRM is underutilized. AI search is reshaping how buyers find you. Synapse Edge audits your commercial infrastructure and builds a clear roadmap to close the gaps." />
 
   <link rel="canonical" href="https://www.synapseedge.com/" />
 
-  <meta property="og:title" content="Synapse Edge | B2B Revenue Strategy & Growth Systems" />
-  <meta property="og:description" content="Modernize intelligently. Align strategy, CRM, SEO, and automation into a scalable B2B revenue system." />
+  <meta property="og:title" content="Synapse Edge | B2B Revenue Infrastructure & AI-Ready Growth" />
+  <meta property="og:description" content="Legacy websites, disconnected CRM, no AI visibility — we identify the gaps and build the system to close them." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.synapseedge.com/" />
 
@@ -21,7 +21,6 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
-  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -31,6 +30,7 @@
         "@id": "https://www.synapseedge.com/#organization",
         "name": "Synapse Edge",
         "url": "https://www.synapseedge.com/",
+        "logo": "https://www.synapseedge.com/assets/logo.png",
         "email": "yaroslav.bogday@synapseedge.com",
         "telephone": "+1-878-236-3229"
       },
@@ -46,8 +46,555 @@
   </script>
 
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       INDEX PAGE — HERO & INTERACTIVE CANVAS
+    ══════════════════════════════════════════ */
+
+    /* ── Nav logo image ── */
+    .nav-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+    .nav-logo { display: flex; align-items: center; }
+
+    /* ── Canvas layer (abstract shapes) ── */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ══ HERO ══ */
+    #hero {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      padding: 148px 0 100px;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+    }
+    /* Diagonal bg split */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 52%;
+      height: 100%;
+      background: linear-gradient(160deg, #f4f6f9 0%, #eef2f6 100%);
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 0;
+    }
+    #hero .container { position: relative; z-index: 2; width: 100%; }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    /* Left column */
+    .hero-left {}
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: 1px solid rgba(15,59,95,0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+    }
+    .hero-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-left h1 {
+      font-size: clamp(2rem, 3.8vw, 3.1rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .hero-left h1 em {
+      font-style: normal;
+      color: var(--primary);
+    }
+    .hero-divider {
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 20px 0;
+      opacity: 0.35;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Pain-point strip below buttons */
+    .hero-pain {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .hero-pain-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .hero-pain-item .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+
+    /* Right column: visual card stack */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+
+    .hero-visual-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .hero-visual-card:hover {
+      transform: translateX(6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-visual-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .hero-visual-card-icon.accent {
+      background: var(--primary);
+    }
+    .hero-visual-card-text {}
+    .hero-visual-card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .hero-visual-card-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .hero-visual-card-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+    /* Status badge */
+    .hero-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-status.ok { color: #16a34a; }
+    .hero-status.warn { color: #d97706; }
+    .hero-status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+    .hero-status.ok .hero-status-dot { background: #16a34a; }
+    .hero-status.warn .hero-status-dot { background: #d97706; }
+
+    /* ══ HOW IT WORKS (new section) ══ */
+    #how-it-works {
+      background: var(--bg-alt);
+      padding: 90px 0;
+    }
+    .hiw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 52px;
+      position: relative;
+    }
+    /* connector line */
+    .hiw-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(16.66% + 14px);
+      right: calc(16.66% + 14px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-light));
+      z-index: 0;
+    }
+    .hiw-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      transition: all 0.22s;
+    }
+    .hiw-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+    .hiw-step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      letter-spacing: -0.02em;
+      box-shadow: 0 6px 20px rgba(15,59,95,0.25);
+    }
+    .hiw-card h3 { font-size: 1rem; margin-bottom: 10px; }
+    .hiw-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ══ STRUCTURAL PROBLEM ══ */
+    #structural-problem { background: var(--bg); }
+    .problem-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .problem-left h2 { margin-bottom: 16px; }
+    .problem-left > p { margin-bottom: 28px; }
+    .problem-closing {
+      margin-top: 32px;
+      padding: 22px 24px;
+      background: var(--primary);
+      border-radius: var(--radius-md);
+      color: #fff;
+    }
+    .problem-closing p {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .problem-list { display: flex; flex-direction: column; gap: 0; }
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.91rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .problem-list li:last-child { border-bottom: none; }
+    .problem-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 1.5px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .problem-check::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* ══ BUILT FROM ══ */
+    #built-from { background: var(--bg-soft); }
+    .built-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .built-content h2 { margin-bottom: 20px; }
+    .built-content p { margin-bottom: 16px; }
+    .built-cards { display: flex; flex-direction: column; gap: 14px; }
+    .built-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary);
+      padding: 20px 22px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .built-card:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
+    .built-card h3 { font-size: 0.92rem; margin-bottom: 6px; }
+    .built-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* ══ EXPERTISE ══ */
+    #expertise { background: var(--bg-alt); }
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .expertise-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 30px 26px;
+      transition: all 0.22s;
+    }
+    .expertise-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+    .expertise-card-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .expertise-card h3 { margin-bottom: 14px; font-size: 0.97rem; }
+    .expertise-card ul { display: flex; flex-direction: column; gap: 8px; }
+    .expertise-card ul li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .expertise-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 1.5px solid var(--primary);
+    }
+
+    /* ══ INDUSTRIES ══ */
+    #industries { background: var(--bg); }
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .industry-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 24px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.22s;
+    }
+    .industry-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    .industry-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+    .industry-card:hover::after { width: 100%; }
+    .industry-label {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .industry-card h3 { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+
+    /* ══ RESULTS ══ */
+    #results { background: var(--bg-alt); }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .result-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 36px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.22s;
+    }
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .result-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .result-card:hover::before { transform: scaleX(1); }
+    .result-num {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .result-label {
+      font-size: 0.81rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* ══ CTA BLOCK ══ */
+    .cta-block {
+      background: var(--primary);
+      padding: 90px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      top: -180px; right: -100px;
+      pointer-events: none;
+    }
+    .cta-block::after {
+      content: '';
+      position: absolute;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      bottom: -120px; left: -80px;
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+    .cta-inner h2 { color: #fff; margin-bottom: 14px; }
+    .cta-inner p { color: rgba(255,255,255,0.75); margin-bottom: 34px; font-size: 0.97rem; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ══ FOOTER LOGO ══ */
+    .footer-logo-img {
+      height: 30px;
+      width: auto;
+      display: block;
+      margin-bottom: 14px;
+      opacity: 0.85;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1024px) {
+      .hiw-grid { grid-template-columns: 1fr; }
+      .hiw-grid::before { display: none; }
+      .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+      .industries-grid { grid-template-columns: repeat(3, 1fr); }
+      .results-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      #hero { min-height: auto; padding: 130px 0 80px; }
+      #hero::before { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 44px; }
+      .problem-inner { grid-template-columns: 1fr; gap: 44px; }
+      .built-inner { grid-template-columns: 1fr; gap: 44px; }
+      .expertise-grid { grid-template-columns: 1fr; }
+      .industries-grid { grid-template-columns: repeat(2, 1fr); }
+      .results-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 480px) {
+      .industries-grid { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .hiw-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-  
 <body>
 
 <!-- ═══════════════════ NAV ═══════════════════ -->
@@ -55,7 +602,9 @@
   <div class="container">
     <div class="nav-inner">
 
-      <a href="/" class="nav-logo">Synapse<span>Edge</span></a>
+      <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">
+        <img src="assets/logo.png" alt="Synapse Edge" class="nav-logo-img" />
+      </a>
 
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
@@ -66,19 +615,13 @@
       </ul>
 
       <div style="display:flex; gap:10px; align-items:center;">
-        <a href="contact.html" class="btn btn-secondary">
-          Contact Us
-        </a>
-
-        <a href="strategy-call.html" class="btn btn-primary">
-          Request a Strategy Call
-        </a>
+        <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+        <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
       </div>
 
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
-
     </div>
   </div>
 </nav>
@@ -87,51 +630,131 @@
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hero" aria-labelledby="hero-h1">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="container">
     <div class="hero-inner">
+
+      <!-- LEFT: Sharp, direct copy -->
       <div class="hero-left fade-up">
-        <span class="eyebrow">B2B Revenue Architecture</span>
-        <h1 id="hero-h1">Design a Predictable Revenue System for Your B2B Business</h1>
-        <p class="hero-sub">Synapse Edge helps established B2B companies align go-to-market strategy, sales operations, CRM infrastructure, Local SEO, marketing automation, and AI-driven visibility into one coherent growth system.</p>
-        <div class="hero-btns">
-          <a href="contact.html" class="btn btn-primary">Request Executive Growth Audit</a>
-          <a href="contact.html#form" class="btn btn-secondary">Book Strategy Call</a>
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          B2B Revenue Infrastructure
         </div>
-        <div class="hero-strip">
-          <div class="hero-strip-item"><div class="dot"></div><span>Revenue Infrastructure Design</span></div>
-          <div class="hero-strip-item"><div class="dot"></div><span>CRM & Sales Operations</span></div>
-          <div class="hero-strip-item"><div class="dot"></div><span>SEO & AI Visibility</span></div>
+
+        <h1 id="hero-h1">
+          Your B2B Business Is <em>Leaving Revenue on the Table.</em>
+        </h1>
+        <span class="hero-divider"></span>
+        <p class="hero-sub">Legacy website. Underutilized CRM. No AI search presence. These aren't marketing problems — they're structural gaps costing you qualified pipeline every day. We audit, design, and implement the infrastructure to close them.</p>
+
+        <div class="hero-btns">
+          <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
+          <a href="approach.html" class="btn btn-secondary">See Our Approach</a>
+        </div>
+
+        <div class="hero-pain">
+          <div class="hero-pain-item">
+            <div class="icon">🏗️</div>
+            <span>Legacy website losing authority &amp; AI search visibility</span>
+          </div>
+          <div class="hero-pain-item">
+            <div class="icon">🔧</div>
+            <span>CRM underutilized — leads lost, follow-up inconsistent</span>
+          </div>
+          <div class="hero-pain-item">
+            <div class="icon">🤖</div>
+            <span>AI &amp; digital revolution requires a new infrastructure layer</span>
+          </div>
         </div>
       </div>
+
+      <!-- RIGHT: Infrastructure diagnostic cards -->
       <div class="hero-right fade-up">
-        <div class="hero-stat-card">
-          <div class="hero-stat-icon">📈</div>
-          <div>
-            <div class="hero-stat-num">$3.5M+</div>
-            <div class="hero-stat-label">Incremental Profit Growth</div>
+
+        <div class="hero-visual-card">
+          <div class="hero-visual-card-icon">🌐</div>
+          <div class="hero-visual-card-text">
+            <div class="hero-visual-card-label">Website Infrastructure</div>
+            <div class="hero-visual-card-title">Legacy site detected</div>
+            <div class="hero-visual-card-sub">
+              <span class="hero-status warn">
+                <span class="hero-status-dot"></span>
+                Authority declining · Not AI-search ready
+              </span>
+            </div>
           </div>
         </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-icon">🎯</div>
-          <div>
-            <div class="hero-stat-num">433%</div>
-            <div class="hero-stat-label">YoY Lead Growth</div>
+
+        <div class="hero-visual-card">
+          <div class="hero-visual-card-icon">⚙️</div>
+          <div class="hero-visual-card-text">
+            <div class="hero-visual-card-label">CRM & Sales Ops</div>
+            <div class="hero-visual-card-title">Pipeline gaps identified</div>
+            <div class="hero-visual-card-sub">
+              <span class="hero-status warn">
+                <span class="hero-status-dot"></span>
+                Lead routing broken · Nurturing missing
+              </span>
+            </div>
           </div>
         </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-icon">🔍</div>
-          <div>
-            <div class="hero-stat-num">150%+</div>
-            <div class="hero-stat-label">Organic Traffic Growth</div>
+
+        <div class="hero-visual-card">
+          <div class="hero-visual-card-icon">🔍</div>
+          <div class="hero-visual-card-text">
+            <div class="hero-visual-card-label">SEO &amp; AI Visibility</div>
+            <div class="hero-visual-card-title">Commercial intent gaps</div>
+            <div class="hero-visual-card-sub">
+              <span class="hero-status warn">
+                <span class="hero-status-dot"></span>
+                Not cited in ChatGPT, Perplexity or Gemini
+              </span>
+            </div>
           </div>
         </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-icon">⚡</div>
-          <div>
-            <div class="hero-stat-num">119%</div>
-            <div class="hero-stat-label">Revenue Growth</div>
+
+        <div class="hero-visual-card" style="border-color: var(--primary); background: var(--primary-light);">
+          <div class="hero-visual-card-icon accent">✅</div>
+          <div class="hero-visual-card-text">
+            <div class="hero-visual-card-label">After Synapse Edge Audit</div>
+            <div class="hero-visual-card-title">Revenue infrastructure aligned</div>
+            <div class="hero-visual-card-sub">
+              <span class="hero-status ok">
+                <span class="hero-status-dot"></span>
+                Strategy · CRM · SEO · AI — all connected
+              </span>
+            </div>
           </div>
         </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+<section id="how-it-works" aria-labelledby="hiw-h2">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="eyebrow">The Process</span>
+      <h2 id="hiw-h2">Audit. Design. Execute.</h2>
+      <p>Every engagement follows a structured three-step path — no guessing, no generic proposals.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-card fade-up">
+        <div class="hiw-step-num">1</div>
+        <h3>Executive Revenue Audit</h3>
+        <p>We evaluate your website, CRM, SEO, paid channels, and AI-search readiness — identifying the specific infrastructure gaps costing you qualified pipeline.</p>
+      </div>
+      <div class="hiw-card fade-up">
+        <div class="hiw-step-num">2</div>
+        <h3>Revenue Architecture Roadmap</h3>
+        <p>Based on the audit, we design a precise implementation blueprint covering every dimension of your commercial system — not a marketing plan, an operational document.</p>
+      </div>
+      <div class="hiw-card fade-up">
+        <div class="hiw-step-num">3</div>
+        <h3>Disciplined Execution</h3>
+        <p>We oversee implementation across all workstreams — SEO, CRM, automation, AI infrastructure — keeping every initiative anchored to revenue performance, not activity metrics.</p>
       </div>
     </div>
   </div>
@@ -143,22 +766,22 @@
     <div class="problem-inner">
       <div class="problem-left fade-up">
         <span class="eyebrow">The Real Issue</span>
-        <h2 id="problem-h2">Most Established B2B Companies Don't Have a Marketing Problem.</h2>
+        <h2 id="problem-h2">You Don't Have a Marketing Problem. You Have a Revenue Infrastructure Gap.</h2>
         <div class="rule"></div>
-        <p>They have a revenue infrastructure gap. Disconnected systems, misaligned teams, and structural blind spots that no campaign can fix.</p>
+        <p>Most established B2B companies have pockets of competency surrounded by structural blind spots. No campaign fixes a broken CRM, a legacy site hemorrhaging authority, or a sales team with no AI search presence.</p>
         <div class="problem-closing">
           <p>More campaigns won't fix structural gaps. Alignment and disciplined execution will.</p>
         </div>
       </div>
       <div class="problem-right fade-up">
         <ul class="problem-list" aria-label="Revenue infrastructure gaps">
+          <li><div class="problem-check" aria-hidden="true"></div>Legacy website losing organic authority &amp; AI-search eligibility</li>
           <li><div class="problem-check" aria-hidden="true"></div>Disconnected sales and marketing teams</li>
-          <li><div class="problem-check" aria-hidden="true"></div>Underutilized CRM systems</li>
-          <li><div class="problem-check" aria-hidden="true"></div>Legacy websites losing authority</li>
-          <li><div class="problem-check" aria-hidden="true"></div>Weak organic and Local SEO visibility</li>
-          <li><div class="problem-check" aria-hidden="true"></div>Poor lead routing and follow-up discipline</li>
-          <li><div class="problem-check" aria-hidden="true"></div>Limited email nurturing and automation</li>
-          <li><div class="problem-check" aria-hidden="true"></div>No AI-search visibility strategy</li>
+          <li><div class="problem-check" aria-hidden="true"></div>Underutilized CRM — no pipeline discipline</li>
+          <li><div class="problem-check" aria-hidden="true"></div>Weak Local SEO and commercial-intent visibility</li>
+          <li><div class="problem-check" aria-hidden="true"></div>Poor lead routing and follow-up consistency</li>
+          <li><div class="problem-check" aria-hidden="true"></div>No AI-search visibility strategy (ChatGPT, Perplexity, Gemini)</li>
+          <li><div class="problem-check" aria-hidden="true"></div>Limited automation — manual processes eroding pipeline</li>
         </ul>
       </div>
     </div>
@@ -175,20 +798,24 @@
         <div class="rule"></div>
         <p>Synapse Edge was shaped by operational experience inside complex B2B environments — not agency theory. We have worked across international dealer networks, territory-based sales organizations, and high-ticket industries where the gap between strategy and execution is measured in lost revenue.</p>
         <p>We understand how territory structure, CRM discipline, and commercial-intent visibility work together — and how each one, when misaligned, quietly erodes your sales pipeline.</p>
-        <a href="about.html" class="btn btn-secondary" style="margin-top:10px;">About the Firm</a>
+        <a href="about.html" class="btn btn-secondary" style="margin-top:12px;">About the Firm</a>
       </div>
       <div class="built-cards fade-up">
         <div class="built-card">
           <h3>Operational Experience</h3>
-          <p>We understand B2B at the process level — not from a deck. Every recommendation is grounded in what actually happens inside your sales and marketing operation.</p>
+          <p>Every recommendation is grounded in what actually happens inside complex B2B sales and marketing operations — not from a deck.</p>
         </div>
         <div class="built-card">
           <h3>Territory-Aware Strategy</h3>
-          <p>We design growth systems that account for geographic coverage, multi-location complexity, and long-cycle deal dynamics unique to industrial B2B.</p>
+          <p>Growth systems designed for geographic coverage, multi-location complexity, and long-cycle deal dynamics.</p>
         </div>
         <div class="built-card">
-          <h3>Execution-First Thinking</h3>
-          <p>Recommendations are built to be implemented — not left as strategy documents. Every system we design has a clear execution path and measurable performance markers.</p>
+          <h3>AI &amp; Digital-Era Thinking</h3>
+          <p>We design infrastructure that performs in both traditional search and the AI-native environments reshaping how B2B buyers discover vendors.</p>
+        </div>
+        <div class="built-card">
+          <h3>Execution-First</h3>
+          <p>Recommendations are built to be implemented. Every system has a clear execution path and measurable commercial outcomes.</p>
         </div>
       </div>
     </div>
@@ -200,8 +827,8 @@
   <div class="container">
     <div class="section-header fade-up">
       <span class="eyebrow">Capabilities</span>
-      <h2 id="expertise-h2">What We Do</h2>
-      <p>Five integrated revenue disciplines that form a complete commercial growth system for established B2B companies.</p>
+      <h2 id="expertise-h2">Five Disciplines. One Revenue System.</h2>
+      <p>Integrated capabilities that close the structural gaps between your current commercial performance and what your business is capable of.</p>
     </div>
     <div class="expertise-grid">
       <div class="expertise-card fade-up">
@@ -254,8 +881,7 @@
           <li>AI-ready site architecture</li>
           <li>AI chat &amp; lead qualification</li>
           <li>AI-search visibility optimization</li>
-          <li>AI lead scoring systems</li>
-          <li>AI calls scoring</li>
+          <li>AI lead &amp; call scoring systems</li>
         </ul>
       </div>
     </div>
@@ -268,13 +894,13 @@
     <div class="section-header fade-up">
       <span class="eyebrow">Sector Focus</span>
       <h2 id="industries-h2">Industries We Serve</h2>
-      <p>High-ticket B2B industries with long sales cycles, multi-stakeholder decisions, and complex commercial structures.</p>
+      <p>High-ticket B2B environments with long sales cycles, multi-stakeholder decisions, and complex commercial structures.</p>
     </div>
     <div class="industries-grid">
       <div class="industry-card fade-up">
         <div class="industry-label">Equipment</div>
         <h3>Heavy Equipment Dealers</h3>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;line-height:1.5;">Construction, Agricultural, Material Handling</p>
+        <p style="font-size:0.76rem;color:var(--text-muted);margin-top:7px;line-height:1.5;">Construction, Agricultural, Material Handling</p>
       </div>
       <div class="industry-card fade-up">
         <div class="industry-label">Fleet</div>
@@ -302,7 +928,7 @@
       </div>
       <div class="industry-card fade-up">
         <div class="industry-label">Capital Equipment</div>
-        <h3>Specialty Capital Equipment &amp; Vehicle Dealer</h3>
+        <h3>Specialty Capital Equipment &amp; Vehicle Dealers</h3>
       </div>
     </div>
   </div>
@@ -314,7 +940,7 @@
     <div class="section-header fade-up">
       <span class="eyebrow">Documented Outcomes</span>
       <h2 id="results-h2">Results That Reflect the Work</h2>
-      <p>Outcomes achieved inside real B2B operations — not projections or estimates.</p>
+      <p>Outcomes achieved inside real B2B operations — not projections, not estimates.</p>
     </div>
     <div class="results-grid">
       <div class="result-card fade-up">
@@ -342,15 +968,18 @@
         <div class="result-label">Reduction in Cost Per Conversion</div>
       </div>
     </div>
+    <div style="text-align:center; margin-top:40px;" class="fade-up">
+      <a href="case-studies.html" class="btn btn-secondary">View Full Case Studies</a>
+    </div>
   </div>
 </section>
 
 <!-- ═══════════════════ CTA ═══════════════════ -->
-<section class="cta-block" aria-labelledby="cs-cta-h2">
+<section class="cta-block" aria-labelledby="cta-h2">
   <div class="container">
     <div class="cta-inner fade-up">
-      <h2 id="cs-cta-h2">Let's Architect Your Revenue System</h2>
-      <p>If your commercial infrastructure has gaps — in your pipeline, CRM, search visibility, or sales process — we'll identify them and build a precise path forward.</p>
+      <h2 id="cta-h2">Let's Identify What's Holding Your Revenue Back</h2>
+      <p>Every engagement starts with a structured audit of your commercial infrastructure — website, CRM, SEO, and AI readiness. No generic proposals. No guesswork.</p>
       <div class="cta-btns">
         <a href="strategy-call.html" class="btn btn-white">Request a Strategy Call</a>
         <a href="approach.html" class="btn btn-white-outline">See Our Approach</a>
@@ -361,15 +990,13 @@
 
 </main>
 
-</main>
-
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer role="contentinfo">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-name">Synapse<span>Edge</span></div>
-        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies with complex commercial environments.</p>
+        <img src="assets/logo.png" alt="Synapse Edge" class="footer-logo-img" />
+        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies navigating the digital and AI shift.</p>
       </div>
       <div class="footer-col">
         <h4>Services</h4>
@@ -394,7 +1021,8 @@
         <h4>Contact</h4>
         <ul>
           <li><a href="contact.html">Request Audit</a></li>
-          <li><a href="contact.html#form">Book Strategy Call</a></li>
+          <li><a href="strategy-call.html">Book Strategy Call</a></li>
+          <li><a href="mailto:yaroslav.bogday@synapseedge.com">Send Email</a></li>
         </ul>
       </div>
     </div>
@@ -406,5 +1034,135 @@
 </footer>
 
 <script src="scripts.js"></script>
+
+<!-- ═══════════════════ INTERACTIVE CANVAS ═══════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, mouse = { x: 0, y: 0 }, scrollY = 0, raf;
+
+  /* ── Resize ── */
+  function resize() {
+    const hero = document.getElementById('hero');
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  /* ── Mouse ── */
+  document.getElementById('hero').addEventListener('mousemove', function (e) {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  }, { passive: true });
+
+  /* ── Scroll ── */
+  window.addEventListener('scroll', function () {
+    scrollY = window.scrollY;
+  }, { passive: true });
+
+  /* ── Shape definitions ── */
+  const SHAPES = [
+    /* id, baseX%, baseY%, size, speed, type, opacity, rotOffset */
+    { x: 0.72, y: 0.18, size: 64, spd: 0.012, type: 'ring',   op: 0.12, ro: 0    },
+    { x: 0.85, y: 0.55, size: 44, spd: 0.018, type: 'rect',   op: 0.09, ro: 0.4  },
+    { x: 0.62, y: 0.80, size: 52, spd: 0.010, type: 'rect',   op: 0.08, ro: 1.1  },
+    { x: 0.90, y: 0.30, size: 28, spd: 0.022, type: 'dot',    op: 0.14, ro: 0    },
+    { x: 0.68, y: 0.44, size: 36, spd: 0.016, type: 'ring',   op: 0.10, ro: 0.7  },
+    { x: 0.78, y: 0.72, size: 56, spd: 0.008, type: 'cross',  op: 0.08, ro: 0.3  },
+    { x: 0.95, y: 0.65, size: 22, spd: 0.026, type: 'dot',    op: 0.12, ro: 0    },
+    { x: 0.55, y: 0.22, size: 30, spd: 0.020, type: 'ring',   op: 0.08, ro: 0.9  },
+  ];
+
+  let t = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    /* parallax offset from mouse + scroll */
+    const mx = (mouse.x / W - 0.5);
+    const my = (mouse.y / H - 0.5);
+    const sy = scrollY * 0.04;
+
+    SHAPES.forEach(function (s) {
+      const bx = s.x * W;
+      const by = s.y * H;
+
+      /* mouse parallax — closer to right edge = more movement */
+      const depth = s.size / 64;
+      const px = bx + mx * 28 * depth;
+      const py = by + my * 22 * depth - sy * depth * 1.4;
+
+      /* scroll flip effect — rotate more on scroll */
+      const rot = s.ro + t * s.spd + scrollY * 0.003 * depth;
+
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(rot);
+      ctx.globalAlpha = s.op;
+      ctx.strokeStyle = '#0f3b5f';
+      ctx.fillStyle   = '#0f3b5f';
+      ctx.lineWidth   = 1.5;
+
+      if (s.type === 'rect') {
+        const hw = s.size * 0.5;
+        const hh = s.size * 0.32;
+        ctx.strokeRect(-hw, -hh, s.size, hh * 2);
+
+      } else if (s.type === 'ring') {
+        ctx.beginPath();
+        ctx.arc(0, 0, s.size * 0.5, 0, Math.PI * 2);
+        ctx.stroke();
+        /* inner dot */
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+      } else if (s.type === 'dot') {
+        ctx.beginPath();
+        ctx.arc(0, 0, s.size * 0.4, 0, Math.PI * 2);
+        ctx.stroke();
+
+      } else if (s.type === 'cross') {
+        const a = s.size * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(-a, 0); ctx.lineTo(a, 0);
+        ctx.moveTo(0, -a); ctx.lineTo(0, a);
+        ctx.stroke();
+        /* rotated square overlay */
+        ctx.rotate(Math.PI / 4);
+        ctx.strokeRect(-a * 0.55, -a * 0.55, a * 1.1, a * 1.1);
+      }
+
+      ctx.restore();
+    });
+
+    t += 0.8;
+    raf = requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  /* Stop animation when hero not visible (perf) */
+  const heroEl = document.getElementById('hero');
+  const obs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      if (!raf) draw();
+    } else {
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+  }, { threshold: 0 });
+  obs.observe(heroEl);
+
+})();
+</script>
+
 </body>
 </html>
