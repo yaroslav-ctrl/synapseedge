@@ -8,6 +8,12 @@
   <meta name="description" content="Request an executive growth audit or contact Synapse Edge for B2B revenue strategy." />
 
   <link rel="canonical" href="https://www.synapseedge.com/contact.html" />
+  <meta property="og:title" content="Contact Us — Synapse Edge" />
+  <meta property="og:description" content="Submit an executive inquiry. We respond within one business day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.synapseedge.com/contact.html" />
+
+  <link rel="icon" href="/assets/favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -22,19 +28,19 @@
 
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="approach.html">Our Approach</a></li>
-        <li><a href="case-studies.html">Case Studies</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/approach.html">Our Approach</a></li>
+        <li><a href="/case-studies.html">Case Studies</a></li>
+        <li><a href="/about.html">About</a></li>
       </ul>
 
       <div style="display:flex; gap:10px; align-items:center;">
-        <a href="contact.html" class="btn btn-secondary">
+        <a href="/contact.html" class="btn btn-secondary" aria-current="page">
           Contact Us
         </a>
 
-        <a href="strategy-call.html" class="btn btn-primary">
-          Request a Strategy Call
+        <a href="/strategy-call.html" class="btn btn-primary">
+          Request Strategy Call
         </a>
       </div>
 
@@ -46,137 +52,150 @@
   </div>
 </nav>
 
-<!-- ═════════════════ MAIN CONTENT ═════════════════ -->
 <main>
 
-<header class="page-hero">
+<header class="page-hero" aria-labelledby="page-h1">
   <div class="container">
     <span class="eyebrow">Executive Inquiry</span>
-    <h1>Contact Synapse Edge</h1>
-    <p>
-      Submit your inquiry below. We respond within one business day.
-    </p>
+    <h1 id="page-h1">Contact Synapse Edge</h1>
+    <p>Submit your inquiry below. We respond within one business day.</p>
   </div>
 </header>
 
-<section class="contact-section">
+<section id="form" class="contact-section" aria-labelledby="contact-h2">
   <div class="container">
-    <div class="contact-layout">
 
-      <!-- LEFT SIDE CONTENT -->
-      <div class="contact-info">
-        <span class="eyebrow">What to Expect</span>
-        <h2>Structured Executive Session</h2>
-        <div class="rule"></div>
+    <!-- Single-column form (left section removed) -->
+    <div class="contact-form-card fade-up" style="max-width: 720px; margin: 0 auto;">
+      <h3 id="contact-h2">Request an Executive Growth Audit</h3>
+      <p class="form-intro">Complete the form below and we’ll follow up shortly.</p>
 
-        <p>
-          We work with established B2B organizations ready to build
-          infrastructure-level revenue systems. If your pipeline, CRM,
-          SEO visibility, or sales process has structural gaps —
-          we’ll identify them and define a precise path forward.
-        </p>
+      <form id="contact-form"
+            action="https://formspree.io/f/mjgeqpvq"
+            method="POST">
 
-        <div class="contact-point">
-          <div class="label">Response Time</div>
-          <div class="value">Within one business day</div>
+        <!-- Formspree settings -->
+        <input type="hidden" name="_subject" value="New Contact Request — synapseedge.com" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="_next" value="https://www.synapseedge.com/thank-you.html" />
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your full name"
+            autocomplete="name"
+          />
         </div>
 
-        <div class="contact-point">
-          <div class="label">Direct Email</div>
-          <div class="value">
-            <a href="mailto:yaroslav.bogday@synapseedge.com">
-              yaroslav.bogday@synapseedge.com
-            </a>
-          </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email <span style="color:var(--primary);">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            aria-required="true"
+            placeholder="your@company.com"
+            autocomplete="email"
+          />
         </div>
-      </div>
 
-      <!-- RIGHT SIDE FORM -->
-      <div class="contact-form-card">
-        <h3>Request an Executive Growth Audit</h3>
-        <p class="form-intro">
-          Complete the form below and we’ll follow up shortly.
+        <!-- Company -->
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            placeholder="Company name"
+            autocomplete="organization"
+          />
+        </div>
+
+        <!-- Industry -->
+        <div class="form-group">
+          <label for="industry">Industry</label>
+          <input
+            type="text"
+            id="industry"
+            name="industry"
+            placeholder="e.g. Heavy Equipment, Industrial, Real Estate"
+          />
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Briefly describe what you’d like to improve."
+          ></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary">
+            Submit Inquiry
+          </button>
+        </div>
+
+        <p style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">
+          Or email directly:
+          <a href="mailto:yaroslav.bogday@synapseedge.com">yaroslav.bogday@synapseedge.com</a>
         </p>
 
-        <form id="contact-form"
-              action="https://formspree.io/f/mjgeqpvq"
-              method="POST">
-
-          <!-- Formspree Configuration -->
-          <input type="hidden" name="_subject" value="New Contact Request — synapseedge.com" />
-          <input type="hidden" name="_redirect" value="https://www.synapseedge.com/thank-you.html" />
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-
-          <!-- Name -->
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text"
-                   id="name"
-                   name="name"
-                   placeholder="Your full name"
-                   autocomplete="name" />
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label for="email">Email *</label>
-            <input type="email"
-                   id="email"
-                   name="email"
-                   required
-                   placeholder="your@company.com"
-                   autocomplete="email" />
-          </div>
-
-          <!-- Company -->
-          <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text"
-                   id="company"
-                   name="company"
-                   placeholder="Company name"
-                   autocomplete="organization" />
-          </div>
-
-          <!-- Industry -->
-          <div class="form-group">
-            <label for="industry">Industry</label>
-            <input type="text"
-                   id="industry"
-                   name="industry"
-                   placeholder="Industry" />
-          </div>
-
-          <!-- Message -->
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message"
-                      name="message"
-                      rows="5"
-                      placeholder="Briefly describe what you’d like to improve."></textarea>
-          </div>
-
-          <div class="form-submit">
-            <button type="submit" class="btn btn-primary">
-              Submit Inquiry
-            </button>
-          </div>
-
-        </form>
-
-      </div>
-
+      </form>
     </div>
+
   </div>
 </section>
 
 </main>
 
-<!-- ═════════════════ FOOTER ═════════════════ -->
-<footer>
+<!-- ═══════════════════ FULL FOOTER (same as other pages) ═══════════════════ -->
+<footer role="contentinfo">
   <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Synapse<span>Edge</span></div>
+        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies with complex commercial environments.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services.html">Growth Strategy</a></li>
+          <li><a href="/services.html">Sales Operations &amp; CRM</a></li>
+          <li><a href="/services.html">SEO &amp; Local Authority</a></li>
+          <li><a href="/services.html">Email Automation</a></li>
+          <li><a href="/services.html">AI Infrastructure</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/approach.html">Our Approach</a></li>
+          <li><a href="/case-studies.html">Case Studies</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="/contact.html">Request Audit</a></li>
+          <li><a href="/strategy-call.html">Book Strategy Call</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="footer-bottom">
       <p>© 2026 Synapse Edge. All rights reserved.</p>
+      <p>Built for enterprise B2B growth infrastructure.</p>
     </div>
   </div>
 </footer>
