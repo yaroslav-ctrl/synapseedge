@@ -106,10 +106,18 @@
           Submit the form below and we’ll reply within one business day to schedule your session.
         </p>
 
-        <form
-          id="contact-form"
-          action="https://formspree.io/f/mjgeqpvq"
-          method="POST"
+        <form id="contact-form"
+      action="https://formspree.io/f/mjgeqpvq"
+      method="POST">
+
+          <!-- Formspree settings -->
+          <input type="hidden" name="_subject" value="New Strategy Call Request — synapseedge.com" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+          <input type="hidden" name="_redirect" value="https://www.synapseedge.com/thank-you.html" />
+        
+          <!-- IMPORTANT: ensure your email field name is 'email' -->
+          ...
+        </form>
         >
           <!-- ✅ Subject line in the email you receive -->
           <input type="hidden" name="_subject" value="New Executive Growth Audit Request — synapseedge.com" />
