@@ -1,6 +1,21 @@
-/
-/services.html
-/approach.html
-/case-studies.html
-/about.html
-/contact.html
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.synapseedge.com/</loc>
+  </url>
+  <url>
+    <loc>https://www.synapseedge.com/services.html</loc>
+  </url>
+  <url>
+    <loc>https://www.synapseedge.com/approach.html</loc>
+  </url>
+  <url>
+    <loc>https://www.synapseedge.com/case-studies.html</loc>
+  </url>
+  <url>
+    <loc>https://www.synapseedge.com/about.html</loc>
+  </url>
+  <url>
+    <loc>https://www.synapseedge.com/contact.html</loc>
+  </url>
+</urlset>
