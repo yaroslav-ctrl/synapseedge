@@ -3,37 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Thank You — Synapse Edge</title>
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Thanks for reaching out to Synapse Edge. We'll respond within one business day." />
   <link rel="canonical" href="https://www.synapseedge.com/thank-you.html" />
+
+  <link rel="icon" href="/assets/favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
 <nav id="navbar" role="navigation" aria-label="Primary">
   <div class="container">
     <div class="nav-inner">
+
       <a href="/" class="nav-logo">Synapse<span>Edge</span></a>
-      <div class="nav-ctas" style="display:flex; gap:10px; align-items:center;">
-        <a href="/" class="btn btn-secondary">Home</a>
-        <a href="contact.html" class="btn btn-primary">Contact</a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/services.html">Services</a></li>
+        <li><a href="/approach.html">Our Approach</a></li>
+        <li><a href="/case-studies.html">Case Studies</a></li>
+        <li><a href="/about.html">About</a></li>
+      </ul>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="/contact.html" class="btn btn-secondary">
+          Contact Us
+        </a>
+
+        <a href="/strategy-call.html" class="btn btn-primary">
+          Request Strategy Call
+        </a>
       </div>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
     </div>
   </div>
 </nav>
 
 <main>
-  <header class="page-hero">
-    <div class="container">
-      <span class="eyebrow">Submitted</span>
-      <h1>Thanks — we got your request.</h1>
-      <p>We’ll reply within one business day.</p>
-      <div style="margin-top:18px;">
-        <a href="/" class="btn btn-primary">Back to Home</a>
+  <header class="page-hero" aria-labelledby="thanks-h1">
+    <div class="container" style="text-align:center; max-width: 880px;">
+      <span class="eyebrow">Submission Received</span>
+      <h1 id="thanks-h1">Thank you — we got your request.</h1>
+      <p>We’ll respond within one business day.</p>
+
+      <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="/">Back to Home</a>
+        <a class="btn btn-secondary" href="/strategy-call.html">Request Strategy Call</a>
       </div>
     </div>
   </header>
 </main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Synapse<span>Edge</span></div>
+        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies with complex commercial environments.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/services.html">Growth Strategy</a></li>
+          <li><a href="/services.html">Sales Operations &amp; CRM</a></li>
+          <li><a href="/services.html">SEO &amp; Local Authority</a></li>
+          <li><a href="/services.html">Email Automation</a></li>
+          <li><a href="/services.html">AI Infrastructure</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/approach.html">Our Approach</a></li>
+          <li><a href="/case-studies.html">Case Studies</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="/contact.html">Request Audit</a></li>
+          <li><a href="/strategy-call.html">Book Strategy Call</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Synapse Edge. All rights reserved.</p>
+      <p>Built for enterprise B2B growth infrastructure.</p>
+    </div>
+  </div>
+</footer>
 
 <script src="scripts.js"></script>
 </body>
