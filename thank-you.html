@@ -8,22 +8,43 @@
   <meta name="description" content="Thanks for reaching out to Synapse Edge. We’ll respond within one business day." />
   <link rel="canonical" href="https://www.synapseedge.com/thank-you.html" />
 
+  <meta property="og:title" content="Thank You — Synapse Edge" />
+  <meta property="og:description" content="We received your request and will respond within one business day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.synapseedge.com/thank-you.html" />
+
+  <link rel="icon" href="/assets/favicon.ico" />
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"Synapse Edge","url":"https://synapseedge.com","logo":"/assets/logo.svg","sameAs":[]}
+  </script>
+
+  <!-- FIXED -->
   <link rel="stylesheet" href="styles.css" />
 
+  <!-- Small page-specific styling only -->
   <style>
-    .thanks-wrap { padding: 80px 0; }
+    .thanks-wrap { padding: 40px 0 90px; }
     .thanks-card {
-      max-width: 820px;
+      max-width: 920px;
       margin: 0 auto;
       background: #fff;
       border: 1px solid rgba(20,40,60,0.10);
       border-radius: 18px;
       padding: 34px;
       box-shadow: 0 10px 30px rgba(10,20,30,0.06);
-      text-align: center;
     }
-    .thanks-card p { max-width: 620px; margin: 10px auto 0; color: rgba(15,30,45,0.75); }
-    .thanks-actions { margin-top: 18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .thanks-card p {
+      max-width: 720px;
+      margin: 10px 0 0;
+      color: rgba(15,30,45,0.75);
+    }
+    .thanks-actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -62,13 +83,23 @@
 </nav>
 
 <main>
-  <section class="thanks-wrap" aria-label="Thank you">
+
+  <!-- Keep same hero structure as other pages -->
+  <header class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <div class="thanks-card">
-        <span class="eyebrow">Message Received</span>
-        <h1 style="margin-top:10px;">Thank you.</h1>
+      <span class="eyebrow">Message Received</span>
+      <h1 id="page-h1">Thank you.</h1>
+      <p>We received your request and will respond within one business day.</p>
+    </div>
+  </header>
+
+  <section class="thanks-wrap" aria-label="Thank you details">
+    <div class="container">
+      <div class="thanks-card fade-up">
+        <h2 style="margin:0;">What happens next</h2>
+        <div class="rule" style="margin:14px 0 10px;"></div>
+
         <p>
-          We received your request and will respond within one business day.
           If this is time-sensitive, email
           <a href="mailto:yaroslav.bogday@synapseedge.com">yaroslav.bogday@synapseedge.com</a>
           or call <a href="tel:+18782363229">878-236-3229</a>.
@@ -81,6 +112,7 @@
       </div>
     </div>
   </section>
+
 </main>
 
 <footer role="contentinfo">
