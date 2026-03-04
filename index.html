@@ -61,12 +61,12 @@
     }
     .nav-logo { display: flex; align-items: center; }
 
-    /* ── Canvas layer (abstract shapes) ── */
+    /* ── WebGL canvas layer ── */
     #hero-canvas {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100% !important;
+      height: 100% !important;
       pointer-events: none;
       z-index: 1;
     }
@@ -81,7 +81,6 @@
       display: flex;
       align-items: center;
     }
-    /* Diagonal bg split */
     #hero::before {
       content: '';
       position: absolute;
@@ -90,9 +89,9 @@
       height: 100%;
       background: linear-gradient(160deg, #f4f6f9 0%, #eef2f6 100%);
       clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
-      z-index: 0;
+      z-index: 2;
     }
-    #hero .container { position: relative; z-index: 2; width: 100%; }
+    #hero .container { position: relative; z-index: 3; width: 100%; }
     .hero-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -100,8 +99,7 @@
       align-items: center;
     }
 
-    /* Left column */
-    .hero-left {}
+    /* ── Hero tag pill ── */
     .hero-tag {
       display: inline-flex;
       align-items: center;
@@ -126,9 +124,10 @@
     }
     @keyframes pulse-dot {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
+    /* ── H1 ── */
     .hero-left h1 {
       font-size: clamp(2rem, 3.8vw, 3.1rem);
       line-height: 1.15;
@@ -139,6 +138,8 @@
       font-style: normal;
       color: var(--primary);
     }
+
+    /* ── Divider ── */
     .hero-divider {
       display: block;
       width: 48px;
@@ -148,31 +149,22 @@
       margin: 20px 0;
       opacity: 0.35;
     }
-    .hero-sub {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-      max-width: 480px;
-      margin-bottom: 32px;
-    }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    /* Pain-point strip below buttons */
+    /* ── Pain points — NO border-top, sits directly after divider ── */
     .hero-pain {
-      margin-top: 36px;
-      padding-top: 28px;
-      border-top: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-bottom: 0;
     }
     .hero-pain-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.83rem;
+      font-size: 1rem;        /* same as hero-sub */
       color: var(--text-muted);
       font-weight: 500;
+      line-height: 1.75;
     }
     .hero-pain-item .icon {
       width: 28px;
@@ -186,14 +178,25 @@
       font-size: 0.85rem;
     }
 
-    /* Right column: visual card stack */
+    /* ── Audit line — sits below bullets ── */
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-top: 20px;
+      margin-bottom: 32px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ── Right column: diagnostic cards ── */
     .hero-right {
       display: flex;
       flex-direction: column;
       gap: 14px;
       position: relative;
     }
-
     .hero-visual-card {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -221,10 +224,7 @@
       flex-shrink: 0;
       font-size: 1rem;
     }
-    .hero-visual-card-icon.accent {
-      background: var(--primary);
-    }
-    .hero-visual-card-text {}
+    .hero-visual-card-icon.accent { background: var(--primary); }
     .hero-visual-card-label {
       font-size: 0.72rem;
       font-weight: 600;
@@ -245,7 +245,6 @@
       margin-top: 2px;
       line-height: 1.4;
     }
-    /* Status badge */
     .hero-status {
       display: inline-flex;
       align-items: center;
@@ -255,20 +254,14 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .hero-status.ok { color: #16a34a; }
+    .hero-status.ok   { color: #16a34a; }
     .hero-status.warn { color: #d97706; }
-    .hero-status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-    }
-    .hero-status.ok .hero-status-dot { background: #16a34a; }
+    .hero-status-dot  { width: 6px; height: 6px; border-radius: 50%; }
+    .hero-status.ok   .hero-status-dot { background: #16a34a; }
     .hero-status.warn .hero-status-dot { background: #d97706; }
 
-    /* ══ HOW IT WORKS (new section) ══ */
-    #how-it-works {
-      background: var(--bg-alt);
-      padding: 90px 0;
-    }
+    /* ══ HOW IT WORKS ══ */
+    #how-it-works { background: var(--bg-alt); padding: 90px 0; }
     .hiw-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -276,7 +269,6 @@
       margin-top: 52px;
       position: relative;
     }
-    /* connector line */
     .hiw-grid::before {
       content: '';
       position: absolute;
@@ -298,11 +290,7 @@
       z-index: 1;
       transition: all 0.22s;
     }
-    .hiw-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-4px);
-      border-color: var(--primary);
-    }
+    .hiw-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: var(--primary); }
     .hiw-step-num {
       width: 52px;
       height: 52px;
@@ -319,7 +307,7 @@
       box-shadow: 0 6px 20px rgba(15,59,95,0.25);
     }
     .hiw-card h3 { font-size: 1rem; margin-bottom: 10px; }
-    .hiw-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
+    .hiw-card p  { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
 
     /* ══ STRUCTURAL PROBLEM ══ */
     #structural-problem { background: var(--bg); }
@@ -338,12 +326,7 @@
       border-radius: var(--radius-md);
       color: #fff;
     }
-    .problem-closing p {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #fff;
-      line-height: 1.6;
-    }
+    .problem-closing p { font-size: 0.95rem; font-weight: 600; color: #fff; line-height: 1.6; }
     .problem-list { display: flex; flex-direction: column; gap: 0; }
     .problem-list li {
       display: flex;
@@ -383,7 +366,7 @@
       align-items: center;
     }
     .built-content h2 { margin-bottom: 20px; }
-    .built-content p { margin-bottom: 16px; }
+    .built-content p  { margin-bottom: 16px; }
     .built-cards { display: flex; flex-direction: column; gap: 14px; }
     .built-card {
       background: var(--bg);
@@ -395,7 +378,7 @@
     }
     .built-card:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
     .built-card h3 { font-size: 0.92rem; margin-bottom: 6px; }
-    .built-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+    .built-card p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 
     /* ══ EXPERTISE ══ */
     #expertise { background: var(--bg-alt); }
@@ -412,11 +395,7 @@
       padding: 30px 26px;
       transition: all 0.22s;
     }
-    .expertise-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-4px);
-      border-color: var(--primary);
-    }
+    .expertise-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: var(--primary); }
     .expertise-card-num {
       font-size: 0.68rem;
       font-weight: 700;
@@ -468,11 +447,7 @@
       background: var(--primary);
       transition: width 0.3s ease;
     }
-    .industry-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-3px);
-      border-color: var(--primary);
-    }
+    .industry-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--primary); }
     .industry-card:hover::after { width: 100%; }
     .industry-label {
       font-size: 0.66rem;
@@ -520,12 +495,7 @@
       letter-spacing: -0.03em;
       line-height: 1;
     }
-    .result-label {
-      font-size: 0.81rem;
-      color: var(--text-muted);
-      margin-top: 10px;
-      line-height: 1.5;
-    }
+    .result-label { font-size: 0.81rem; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
 
     /* ══ CTA BLOCK ══ */
     .cta-block {
@@ -555,7 +525,7 @@
     }
     .cta-inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
     .cta-inner h2 { color: #fff; margin-bottom: 14px; }
-    .cta-inner p { color: rgba(255,255,255,0.75); margin-bottom: 34px; font-size: 0.97rem; }
+    .cta-inner p  { color: rgba(255,255,255,0.75); margin-bottom: 34px; font-size: 0.97rem; }
     .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
     /* ══ FOOTER LOGO ══ */
@@ -586,12 +556,12 @@
       .industries-grid { grid-template-columns: repeat(2, 1fr); }
       .results-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-btns { flex-direction: column; align-items: flex-start; }
-      .cta-btns { flex-direction: column; align-items: center; }
+      .cta-btns  { flex-direction: column; align-items: center; }
     }
     @media (max-width: 480px) {
       .industries-grid { grid-template-columns: 1fr; }
-      .results-grid { grid-template-columns: 1fr; }
-      .hiw-grid { grid-template-columns: 1fr; }
+      .results-grid    { grid-template-columns: 1fr; }
+      .hiw-grid        { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -634,8 +604,8 @@
   <div class="container">
     <div class="hero-inner">
 
-      <!-- LEFT: Sharp, direct copy -->
       <div class="hero-left fade-up">
+
         <div class="hero-tag">
           <span class="hero-tag-dot"></span>
           B2B Revenue Infrastructure
@@ -644,14 +614,10 @@
         <h1 id="hero-h1">
           Your B2B Business Is <em>Leaving Revenue on the Table.</em>
         </h1>
+
         <span class="hero-divider"></span>
-        <p class="hero-sub">Legacy website. Underutilized CRM. No AI search presence. We audit, design, and implement the infrastructure needed to close these gaps.</p>
 
-        <div class="hero-btns">
-          <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
-          <a href="approach.html" class="btn btn-secondary">See Our Approach</a>
-        </div>
-
+        <!-- ① Pain points — directly after divider -->
         <div class="hero-pain">
           <div class="hero-pain-item">
             <div class="icon">🏗️</div>
@@ -666,6 +632,17 @@
             <span>AI &amp; digital revolution requires a new infrastructure layer</span>
           </div>
         </div>
+
+        <!-- ② "We audit" line — sits below bullets, same font size -->
+        <p class="hero-sub">
+          We audit, design, and implement the infrastructure needed to close these gaps.
+        </p>
+
+        <div class="hero-btns">
+          <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
+          <a href="approach.html" class="btn btn-secondary">See Our Approach</a>
+        </div>
+
       </div>
 
       <!-- RIGHT: Infrastructure diagnostic cards -->
@@ -688,7 +665,7 @@
         <div class="hero-visual-card">
           <div class="hero-visual-card-icon">⚙️</div>
           <div class="hero-visual-card-text">
-            <div class="hero-visual-card-label">CRM & Sales Ops</div>
+            <div class="hero-visual-card-label">CRM &amp; Sales Ops</div>
             <div class="hero-visual-card-title">Pipeline gaps identified</div>
             <div class="hero-visual-card-sub">
               <span class="hero-status warn">
@@ -713,7 +690,7 @@
           </div>
         </div>
 
-        <div class="hero-visual-card" style="border-color: var(--primary); background: var(--primary-light);">
+        <div class="hero-visual-card" style="border-color:var(--primary); background:var(--primary-light);">
           <div class="hero-visual-card-icon accent">✅</div>
           <div class="hero-visual-card-text">
             <div class="hero-visual-card-label">After Synapse Edge Audit</div>
@@ -768,7 +745,7 @@
         <span class="eyebrow">The Real Issue</span>
         <h2 id="problem-h2">You Don't Have a Marketing Problem. You Have a Revenue Infrastructure Gap.</h2>
         <div class="rule"></div>
-        <p>Most established B2B companies have strong capabilities in certain areas, but the overall system often lacks alignment. Campaigns alone cannot solve structural issues — whether it's an outdated website losing visibility, a CRM that isn’t fully utilized, or a digital presence that isn’t built for how buyers search today.</p>
+        <p>Most established B2B companies have strong capabilities in certain areas, but the overall system often lacks alignment. Campaigns alone cannot solve structural issues — whether it's an outdated website losing visibility, a CRM that isn't fully utilized, or a digital presence that isn't built for how buyers search today.</p>
         <div class="problem-closing">
           <p>More campaigns won't fix structural gaps. Alignment and disciplined execution will.</p>
         </div>
@@ -1035,131 +1012,257 @@
 
 <script src="scripts.js"></script>
 
-<!-- ═══════════════════ INTERACTIVE CANVAS ═══════════════════ -->
+<!-- ═══════════════════ THREE.JS 3D GLASS SHARDS ═══════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function () {
   'use strict';
 
+  const heroEl = document.getElementById('hero');
   const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  if (!heroEl || !canvas) return;
 
-  let W, H, mouse = { x: 0, y: 0 }, scrollY = 0, raf;
+  /* ─── Renderer ─── */
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  } catch(e) { return; }
 
-  /* ── Resize ── */
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+
+  /* ─── Scene & Camera ─── */
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 120);
+  camera.position.set(0, 0, 9);
+
   function resize() {
-    const hero = document.getElementById('hero');
-    W = canvas.width  = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
+    const W = heroEl.offsetWidth, H = heroEl.offsetHeight;
+    camera.aspect = W / H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W, H, false);
   }
   window.addEventListener('resize', resize);
   resize();
 
-  /* ── Mouse ── */
-  document.getElementById('hero').addEventListener('mousemove', function (e) {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-  }, { passive: true });
+  /* ─── Lights ─── */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-  /* ── Scroll ── */
-  window.addEventListener('scroll', function () {
-    scrollY = window.scrollY;
-  }, { passive: true });
+  const key = new THREE.DirectionalLight(0x6ec6f5, 3.5);
+  key.position.set(6, 10, 8);
+  scene.add(key);
 
-  /* ── Shape definitions ── */
-  const SHAPES = [
-    /* id, baseX%, baseY%, size, speed, type, opacity, rotOffset */
-    { x: 0.72, y: 0.18, size: 64, spd: 0.012, type: 'ring',   op: 0.12, ro: 0    },
-    { x: 0.85, y: 0.55, size: 44, spd: 0.018, type: 'rect',   op: 0.09, ro: 0.4  },
-    { x: 0.62, y: 0.80, size: 52, spd: 0.010, type: 'rect',   op: 0.08, ro: 1.1  },
-    { x: 0.90, y: 0.30, size: 28, spd: 0.022, type: 'dot',    op: 0.14, ro: 0    },
-    { x: 0.68, y: 0.44, size: 36, spd: 0.016, type: 'ring',   op: 0.10, ro: 0.7  },
-    { x: 0.78, y: 0.72, size: 56, spd: 0.008, type: 'cross',  op: 0.08, ro: 0.3  },
-    { x: 0.95, y: 0.65, size: 22, spd: 0.026, type: 'dot',    op: 0.12, ro: 0    },
-    { x: 0.55, y: 0.22, size: 30, spd: 0.020, type: 'ring',   op: 0.08, ro: 0.9  },
-  ];
+  const fill = new THREE.DirectionalLight(0x0f3b5f, 2.0);
+  fill.position.set(-8, -4, 3);
+  scene.add(fill);
 
-  let t = 0;
+  const rim = new THREE.DirectionalLight(0xffffff, 1.2);
+  rim.position.set(0, -6, -5);
+  scene.add(rim);
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
+  /* ─── Point lights that move with mouse for dramatic reflections ─── */
+  const ptLight1 = new THREE.PointLight(0x5bb8ff, 4.0, 25);
+  ptLight1.position.set(3, 3, 5);
+  scene.add(ptLight1);
 
-    /* parallax offset from mouse + scroll */
-    const mx = (mouse.x / W - 0.5);
-    const my = (mouse.y / H - 0.5);
-    const sy = scrollY * 0.04;
+  const ptLight2 = new THREE.PointLight(0x0f3b5f, 3.0, 20);
+  ptLight2.position.set(-4, -2, 4);
+  scene.add(ptLight2);
 
-    SHAPES.forEach(function (s) {
-      const bx = s.x * W;
-      const by = s.y * H;
+  /* ─── Helper ─── */
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function rndSign()  { return Math.random() > .5 ? 1 : -1; }
 
-      /* mouse parallax — closer to right edge = more movement */
-      const depth = s.size / 64;
-      const px = bx + mx * 28 * depth;
-      const py = by + my * 22 * depth - sy * depth * 1.4;
-
-      /* scroll flip effect — rotate more on scroll */
-      const rot = s.ro + t * s.spd + scrollY * 0.003 * depth;
-
-      ctx.save();
-      ctx.translate(px, py);
-      ctx.rotate(rot);
-      ctx.globalAlpha = s.op;
-      ctx.strokeStyle = '#0f3b5f';
-      ctx.fillStyle   = '#0f3b5f';
-      ctx.lineWidth   = 1.5;
-
-      if (s.type === 'rect') {
-        const hw = s.size * 0.5;
-        const hh = s.size * 0.32;
-        ctx.strokeRect(-hw, -hh, s.size, hh * 2);
-
-      } else if (s.type === 'ring') {
-        ctx.beginPath();
-        ctx.arc(0, 0, s.size * 0.5, 0, Math.PI * 2);
-        ctx.stroke();
-        /* inner dot */
-        ctx.beginPath();
-        ctx.arc(0, 0, 3, 0, Math.PI * 2);
-        ctx.fill();
-
-      } else if (s.type === 'dot') {
-        ctx.beginPath();
-        ctx.arc(0, 0, s.size * 0.4, 0, Math.PI * 2);
-        ctx.stroke();
-
-      } else if (s.type === 'cross') {
-        const a = s.size * 0.5;
-        ctx.beginPath();
-        ctx.moveTo(-a, 0); ctx.lineTo(a, 0);
-        ctx.moveTo(0, -a); ctx.lineTo(0, a);
-        ctx.stroke();
-        /* rotated square overlay */
-        ctx.rotate(Math.PI / 4);
-        ctx.strokeRect(-a * 0.55, -a * 0.55, a * 1.1, a * 1.1);
-      }
-
-      ctx.restore();
+  /* ─── Material factory ─── */
+  /*  We create individual materials per shard so they can vary slightly  */
+  function makeMat(tint, opacity, metalness, roughness) {
+    return new THREE.MeshStandardMaterial({
+      color:      tint,
+      metalness:  metalness,
+      roughness:  roughness,
+      transparent: true,
+      opacity:    opacity,
+      side:       THREE.DoubleSide,
+      depthWrite: false,
+      envMapIntensity: 1.5,
     });
-
-    t += 0.8;
-    raf = requestAnimationFrame(draw);
   }
 
-  draw();
+  /* Edge line material */
+  const edgeMat = new THREE.LineBasicMaterial({
+    color: 0x9ecfec,
+    transparent: true,
+    opacity: 0.55,
+  });
 
-  /* Stop animation when hero not visible (perf) */
-  const heroEl = document.getElementById('hero');
-  const obs = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting) {
-      if (!raf) draw();
+  const edgeMatDark = new THREE.LineBasicMaterial({
+    color: 0x0f3b5f,
+    transparent: true,
+    opacity: 0.35,
+  });
+
+  /* ─── Build one shard (box + edge lines) ─── */
+  function buildShard(w, h, d, matParams) {
+    const group = new THREE.Group();
+
+    /* Face geometry */
+    const geo  = new THREE.BoxGeometry(w, h, d, 1, 1, 1);
+    const mat  = makeMat(matParams.color, matParams.opacity, matParams.metalness, matParams.roughness);
+    const mesh = new THREE.Mesh(geo, mat);
+    group.add(mesh);
+
+    /* Bright edge lines */
+    const edges    = new THREE.EdgesGeometry(geo);
+    const lineMat  = Math.random() > 0.5 ? edgeMat.clone() : edgeMatDark.clone();
+    lineMat.opacity = rnd(0.3, 0.7);
+    const lines    = new THREE.LineSegments(edges, lineMat);
+    group.add(lines);
+
+    return group;
+  }
+
+  /* ─── Shard catalogue ─── */
+  /*
+    ZONE STRATEGY (matches your hero layout):
+      LEFT  = x < -3.0  → behind / left of the text column
+      RIGHT = x >  3.2  → behind / right of the cards column
+      TOP   = y > 2.8   → above both columns (peeks over)
+      BOT   = y < -2.8  → below content
+      BG    = pushed to z -3 to -6, large, very transparent → depth layer
+  */
+  const CATALOGUE = [
+    /* ──── LEFT EDGE ──── */
+    { zone:'left',  w:1.6, h:2.8, d:0.18, color:0xb8d8ee, op:0.42, m:0.25, r:0.12 },
+    { zone:'left',  w:0.9, h:1.6, d:0.14, color:0xd0e8f5, op:0.38, m:0.3,  r:0.08 },
+    { zone:'left',  w:2.0, h:0.9, d:0.20, color:0x9ec8e0, op:0.35, m:0.2,  r:0.15 },
+    { zone:'left',  w:0.5, h:3.2, d:0.10, color:0xcce4f7, op:0.30, m:0.35, r:0.06 },
+    { zone:'left',  w:1.2, h:1.2, d:0.22, color:0xa8cfe0, op:0.40, m:0.28, r:0.10 },
+    { zone:'left',  w:0.7, h:0.7, d:0.08, color:0xe0f0fa, op:0.28, m:0.15, r:0.20 },
+    { zone:'left',  w:1.8, h:1.4, d:0.16, color:0xb0d4ea, op:0.36, m:0.22, r:0.14 },
+
+    /* ──── RIGHT EDGE ──── */
+    { zone:'right', w:1.4, h:2.4, d:0.18, color:0xb8d8ee, op:0.42, m:0.25, r:0.12 },
+    { zone:'right', w:2.2, h:1.0, d:0.16, color:0xd0e8f5, op:0.35, m:0.30, r:0.09 },
+    { zone:'right', w:0.8, h:1.8, d:0.12, color:0x9ec8e0, op:0.38, m:0.20, r:0.15 },
+    { zone:'right', w:0.4, h:2.8, d:0.10, color:0xcce4f7, op:0.28, m:0.35, r:0.06 },
+    { zone:'right', w:1.0, h:1.0, d:0.20, color:0xa8cfe0, op:0.40, m:0.28, r:0.10 },
+    { zone:'right', w:1.6, h:0.7, d:0.14, color:0xe0f0fa, op:0.30, m:0.18, r:0.18 },
+
+    /* ──── DEEP BACKGROUND — visible through both columns, very faint ──── */
+    { zone:'bg',    w:3.0, h:4.5, d:0.08, color:0xc8dff0, op:0.14, m:0.15, r:0.20 },
+    { zone:'bg',    w:4.0, h:2.2, d:0.08, color:0xb0cce0, op:0.12, m:0.18, r:0.25 },
+    { zone:'bg',    w:2.5, h:2.5, d:0.08, color:0xd8ecf8, op:0.16, m:0.12, r:0.22 },
+    { zone:'bg',    w:1.8, h:3.5, d:0.06, color:0xc0d8ec, op:0.13, m:0.20, r:0.20 },
+    { zone:'bg',    w:3.5, h:1.5, d:0.06, color:0xb8d4e8, op:0.11, m:0.16, r:0.28 },
+  ];
+
+  const shards = [];
+
+  CATALOGUE.forEach(function(def) {
+    const g = buildShard(def.w, def.h, def.d, {
+      color:   def.color,
+      opacity: def.op,
+      metalness: def.m,
+      roughness: def.r,
+    });
+
+    /* Position */
+    if (def.zone === 'left') {
+      g.position.set(rnd(-7.5, -3.2), rnd(-3.0, 3.0), rnd(-2.5, 0.8));
+    } else if (def.zone === 'right') {
+      g.position.set(rnd(3.2,  7.5), rnd(-3.0, 3.0), rnd(-2.5, 0.8));
     } else {
-      cancelAnimationFrame(raf);
-      raf = null;
+      /* bg — scattered wide, pushed back */
+      g.position.set(rndSign() * rnd(1.0, 5.5), rnd(-3.5, 3.5), rnd(-6.0, -3.0));
     }
-  }, { threshold: 0 });
-  obs.observe(heroEl);
+
+    /* Random tumble start */
+    g.rotation.set(rnd(0, Math.PI*2), rnd(0, Math.PI*2), rnd(0, Math.PI*2));
+
+    const spd = def.zone === 'bg' ? rnd(0.06, 0.14) : rnd(0.14, 0.50);
+    g.userData = {
+      basePos:     g.position.clone(),
+      rx: rndSign() * spd * rnd(0.3, 0.7),
+      ry: rndSign() * spd * rnd(0.4, 1.0),
+      rz: rndSign() * spd * rnd(0.2, 0.5),
+      floatSpd:    rnd(0.2, 0.7),
+      floatAmt:    def.zone === 'bg' ? rnd(0.05, 0.15) : rnd(0.18, 0.55),
+      floatOffset: rnd(0, Math.PI * 2),
+      parallaxD:   def.zone === 'bg' ? 0.2 : rnd(0.5, 1.2),
+    };
+
+    scene.add(g);
+    shards.push(g);
+  });
+
+  /* ─── Mouse & Scroll ─── */
+  const mouse    = { x: 0, y: 0 };
+  const mTarget  = { x: 0, y: 0 };
+  let   scrollY  = 0;
+  let   scrollTgt = 0;
+
+  window.addEventListener('mousemove', function(e) {
+    mTarget.x = (e.clientX / window.innerWidth  - 0.5) * 2.0;
+    mTarget.y = (e.clientY / window.innerHeight - 0.5) * 2.0;
+  }, { passive: true });
+
+  window.addEventListener('scroll', function() {
+    scrollTgt = window.scrollY;
+  }, { passive: true });
+
+  /* ─── Animation ─── */
+  const clock  = new THREE.Clock();
+  let   active = true;
+
+  function animate() {
+    if (!active) return;
+    requestAnimationFrame(animate);
+
+    const t = clock.getElapsedTime();
+
+    /* Lerp mouse & scroll */
+    mouse.x  += (mTarget.x - mouse.x)     * 0.055;
+    mouse.y  += (mTarget.y - mouse.y)     * 0.055;
+    scrollY  += (scrollTgt - scrollY)     * 0.08;
+
+    /* Move point lights with mouse for dynamic reflections */
+    ptLight1.position.set(mouse.x * 5 + 3, -mouse.y * 4 + 2, 6);
+    ptLight2.position.set(-mouse.x * 4 - 2, mouse.y * 3 - 1, 5);
+
+    /* Camera parallax */
+    camera.position.x += (mouse.x * 0.8  - camera.position.x) * 0.04;
+    camera.position.y += (-mouse.y * 0.5 - scrollY * 0.001 - camera.position.y) * 0.04;
+    camera.lookAt(0, 0, 0);
+
+    shards.forEach(function(g) {
+      const ud = g.userData;
+      /* Spin */
+      g.rotation.x += ud.rx * 0.016;
+      g.rotation.y += ud.ry * 0.016;
+      g.rotation.z += ud.rz * 0.016;
+      /* Float */
+      g.position.y = ud.basePos.y + Math.sin(t * ud.floatSpd + ud.floatOffset) * ud.floatAmt;
+      /* Mouse parallax per shard */
+      g.position.x = ud.basePos.x + mouse.x * ud.parallaxD * 0.7;
+      g.position.z = ud.basePos.z + mouse.y * ud.parallaxD * 0.3;
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  /* Pause off-screen */
+  new IntersectionObserver(function(entries) {
+    active = entries[0].isIntersecting;
+  }, { threshold: 0 }).observe(heroEl);
+
+  document.addEventListener('visibilitychange', function() {
+    active = !document.hidden;
+    if (active) animate();
+  });
 
 })();
 </script>
