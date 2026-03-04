@@ -1004,243 +1004,366 @@
 
 <script src="scripts.js"></script>
 
-<!-- ═══════════════════ THREE.JS GLASS CUBES ═══════════════════ -->
+<!-- ═══════════════════ THREE.JS — MODERN GLASS SHARDS (DROP-IN) ═══════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
-'use strict';
+  'use strict';
 
-var hero   = document.getElementById('hero');
-var canvas = document.getElementById('hero-canvas');
-if(!hero || !canvas) return;
+  var hero   = document.getElementById('hero');
+  var canvas = document.getElementById('hero-canvas');
+  if(!hero || !canvas || !window.THREE) return;
 
-/* ── Renderer ── */
-var renderer;
-try {
-  renderer = new THREE.WebGLRenderer({ canvas:canvas, alpha:true, antialias:true });
-} catch(e){ return; }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-renderer.setClearColor(0x000000, 0);
-renderer.sortObjects = true;
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch(e){}
 
-/* ── Scene / Camera ── */
-var scene  = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
-camera.position.set(0, 0, 14);
+  // ─────────────────────────────────────────────────────────────
+  // Renderer
+  // ─────────────────────────────────────────────────────────────
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+  } catch(e){ return; }
 
-function resize(){
-  var W = hero.offsetWidth, H = hero.offsetHeight;
-  camera.aspect = W / H;
-  camera.updateProjectionMatrix();
-  renderer.setSize(W, H, false);
-}
-window.addEventListener('resize', resize);
-resize();
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+  renderer.sortObjects = true;
 
-/* ── Lights ── */
-var amb = new THREE.AmbientLight(0xffffff, 0.7);
-scene.add(amb);
+  // ─────────────────────────────────────────────────────────────
+  // Scene / Camera
+  // ─────────────────────────────────────────────────────────────
+  var scene  = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 220);
+  camera.position.set(0, 0, 15);
 
-var d1 = new THREE.DirectionalLight(0x6eb8f0, 2.5);
-d1.position.set(8, 12, 10); scene.add(d1);
+  function resize(){
+    var W = hero.offsetWidth || window.innerWidth;
+    var H = hero.offsetHeight || window.innerHeight;
+    camera.aspect = W / H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W, H, false);
+  }
+  window.addEventListener('resize', resize, { passive:true });
+  resize();
 
-var d2 = new THREE.DirectionalLight(0x0f3b5f, 1.8);
-d2.position.set(-10, -5, 5); scene.add(d2);
+  // ─────────────────────────────────────────────────────────────
+  // Lighting (cleaner, more "studio" feel on white background)
+  // ─────────────────────────────────────────────────────────────
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
 
-var d3 = new THREE.DirectionalLight(0xffffff, 1.2);
-d3.position.set(0, -8, -6); scene.add(d3);
+  var key = new THREE.DirectionalLight(0xbfe6ff, 2.2);
+  key.position.set(8, 10, 10);
+  scene.add(key);
 
-/* Moving point light follows mouse */
-var ptLight = new THREE.PointLight(0x4da6e8, 3.5, 40);
-ptLight.position.set(0, 0, 8);
-scene.add(ptLight);
+  var fill = new THREE.DirectionalLight(0xffffff, 1.35);
+  fill.position.set(-10, 2, 8);
+  scene.add(fill);
 
-/* ── Helper ── */
-function rnd(a,b){ return a + Math.random()*(b-a); }
-function rndS(){ return Math.random()>.5 ? 1 : -1; }
+  var rim = new THREE.DirectionalLight(0x7fb6ff, 1.15);
+  rim.position.set(0, -8, -8);
+  scene.add(rim);
 
-/* ── Glass cube factory ── */
-/*
-  Each "cube" is actually a group:
-    - Solid glass face (MeshPhysicalMaterial, very transparent)
-    - EdgesGeometry lines (the crisp blue/white edges that define the cube)
-  This gives the exact look of reference image 5 — recognisable cube form,
-  mostly transparent with glowing edges.
-*/
-function makeCube(size, opacity, edgeOpacity, tint) {
-  var group = new THREE.Group();
+  // Mouse-follow point light (subtle)
+  var pt = new THREE.PointLight(0x8cc9ff, 2.6, 50);
+  pt.position.set(0, 0, 10);
+  scene.add(pt);
 
-  var geo = new THREE.BoxGeometry(size, size, size);
+  // ─────────────────────────────────────────────────────────────
+  // Helpers
+  // ─────────────────────────────────────────────────────────────
+  function rnd(a,b){ return a + Math.random()*(b-a); }
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  function sign(){ return Math.random() > 0.5 ? 1 : -1; }
 
-  /* Glass body */
-  var mat = new THREE.MeshPhysicalMaterial({
-    color:       tint,
-    metalness:   0.05,
-    roughness:   0.0,
-    transmission: 1.0,
-    transparent: true,
-    opacity:     opacity,
-    side:        THREE.FrontSide,
-    depthWrite:  false,
-    envMapIntensity: 1.0,
+  // ─────────────────────────────────────────────────────────────
+  // "Soft glow sprite" (cheap bloom-ish halo)
+  // ─────────────────────────────────────────────────────────────
+  function makeGlowSprite(colorHex, size){
+    var c = document.createElement('canvas');
+    c.width = 128; c.height = 128;
+    var ctx = c.getContext('2d');
+    var g = ctx.createRadialGradient(64,64,2, 64,64,64);
+    g.addColorStop(0.0, 'rgba(255,255,255,0.75)');
+    g.addColorStop(0.25, 'rgba(255,255,255,0.22)');
+    g.addColorStop(1.0, 'rgba(255,255,255,0.0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,128,128);
+
+    var tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+
+    var mat = new THREE.SpriteMaterial({
+      map: tex,
+      color: colorHex,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    var s = new THREE.Sprite(mat);
+    s.scale.set(size, size, 1);
+    return s;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Materials (better "glass" response)
+  // NOTE: three r128 physical params are limited; these work well.
+  // ─────────────────────────────────────────────────────────────
+  function makeGlassMaterial(tintHex, opacity){
+    return new THREE.MeshPhysicalMaterial({
+      color: tintHex,
+      metalness: 0.02,
+      roughness: 0.08,
+      transmission: 1.0,
+      transparent: true,
+      opacity: opacity,
+      ior: 1.35,
+      thickness: 0.55,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.18,
+      reflectivity: 0.45,
+      depthWrite: false
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Geometry: "plates" and "shards" (thin boxes with varied aspect)
+  // ─────────────────────────────────────────────────────────────
+  function makePlate(w, h, d){
+    // d small => thin glass slab
+    var geo = new THREE.BoxGeometry(w, h, d);
+    return geo;
+  }
+
+  function makeShard(w, h, d){
+    // Irregular shard: a thin box + slightly skewed by scaling + rotation
+    // (Keep it cheap; still reads as "shard" when thin + varied proportions)
+    var geo = new THREE.BoxGeometry(w, h, d);
+    return geo;
+  }
+
+  // Edge lines (cleaner than heavy cubes)
+  function makeEdgeLines(geo, opacity){
+    var edges = new THREE.EdgesGeometry(geo, 18);
+    var mat = new THREE.LineBasicMaterial({
+      color: 0x6bbcff,
+      transparent: true,
+      opacity: opacity,
+      depthWrite: false
+    });
+    return new THREE.LineSegments(edges, mat);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Layout zones (avoid text + cards)
+  // ─────────────────────────────────────────────────────────────
+  // World-space content zone roughly x: [-5..+5], y: [-3..+3]
+  // Place objects mostly on fringes / corners / deep background.
+  var objects = [];
+
+  var palette = [
+    0xeaf6ff, // icy white
+    0xd8efff, // light blue
+    0xcfe6ff, // cool blue
+    0xf1fbff  // near-white
+  ];
+
+  // Hand-tuned placements (more "art-directed" than random)
+  // type: 'plate' | 'shard'
+  var layout = [
+    // LEFT fringe
+    {t:'plate', x:-8.4, y: 1.6, z:-1.2, w:2.9, h:0.55, d:0.10, op:0.18, edge:0.38},
+    {t:'shard', x:-7.1, y:-0.2, z: 0.4, w:1.1, h:1.9, d:0.08, op:0.14, edge:0.32},
+    {t:'plate', x:-6.6, y:-2.7, z:-0.6, w:2.2, h:0.42, d:0.09, op:0.16, edge:0.34},
+    {t:'shard', x:-8.8, y: 3.8, z:-1.5, w:1.2, h:2.6, d:0.08, op:0.12, edge:0.26},
+
+    // RIGHT fringe
+    {t:'plate', x: 8.1, y: 1.1, z:-1.0, w:3.1, h:0.58, d:0.10, op:0.18, edge:0.38},
+    {t:'shard', x: 6.9, y:-1.6, z: 0.6, w:1.0, h:2.1, d:0.08, op:0.14, edge:0.30},
+    {t:'plate', x: 7.9, y:-3.0, z:-0.9, w:2.4, h:0.44, d:0.09, op:0.16, edge:0.34},
+    {t:'shard', x: 9.0, y: 3.3, z:-1.3, w:1.2, h:2.8, d:0.08, op:0.11, edge:0.24},
+
+    // Corners / peek-ins
+    {t:'plate', x:-2.8, y: 5.8, z:-2.2, w:3.4, h:0.46, d:0.10, op:0.12, edge:0.22},
+    {t:'plate', x: 3.3, y:-5.2, z:-1.8, w:3.0, h:0.42, d:0.10, op:0.12, edge:0.22},
+
+    // Deep background (large, very soft)
+    {t:'plate', x:-4.0, y: 0.4, z:-8.0, w:6.5, h:0.75, d:0.12, op:0.06, edge:0.10},
+    {t:'shard', x: 4.8, y: 1.2, z:-7.0, w:2.2, h:4.6, d:0.10, op:0.05, edge:0.10},
+    {t:'plate', x: 0.2, y:-2.4, z:-9.5, w:7.4, h:0.85, d:0.12, op:0.05, edge:0.08}
+  ];
+
+  layout.forEach(function(d, i){
+    var tint = palette[i % palette.length];
+
+    var geo = (d.t === 'plate')
+      ? makePlate(d.w, d.h, d.d)
+      : makeShard(d.w, d.h, d.d);
+
+    var mat = makeGlassMaterial(tint, d.op);
+
+    var group = new THREE.Group();
+    var mesh  = new THREE.Mesh(geo, mat);
+    group.add(mesh);
+
+    var lines = makeEdgeLines(geo, d.edge);
+    group.add(lines);
+
+    // Add a subtle glow halo behind some objects (not all)
+    if(i % 2 === 0){
+      var glow = makeGlowSprite(0x7fbfff, rnd(2.4, 4.0));
+      glow.position.set(0, 0, -0.2);
+      group.add(glow);
+    }
+
+    // Position
+    group.position.set(
+      d.x + rnd(-0.35, 0.35),
+      d.y + rnd(-0.25, 0.25),
+      d.z + rnd(-0.25, 0.25)
+    );
+
+    // Start rotation (more controlled)
+    group.rotation.set(
+      rnd(-0.6, 0.6),
+      rnd(-0.8, 0.8),
+      rnd(-0.4, 0.4)
+    );
+
+    // Make shards look less boxy by non-uniform scale
+    if(d.t === 'shard'){
+      group.scale.set(rnd(0.9,1.15), rnd(0.95,1.25), 1);
+    }
+
+    var isBg = d.z < -6.5;
+    group.userData = {
+      basePos: group.position.clone(),
+      baseRot: group.rotation.clone(),
+      // rotation rates
+      rx: sign() * rnd(0.06, isBg ? 0.10 : 0.22),
+      ry: sign() * rnd(0.08, isBg ? 0.12 : 0.28),
+      rz: sign() * rnd(0.03, isBg ? 0.06 : 0.16),
+      // float
+      floatSpd: rnd(0.25, isBg ? 0.45 : 0.85),
+      floatAmt: isBg ? rnd(0.05, 0.16) : rnd(0.14, 0.55),
+      floatPhase: rnd(0, Math.PI * 2),
+      // parallax depth
+      parallax: isBg ? 0.14 : rnd(0.28, 0.72),
+      // scroll response multiplier
+      scrollK: isBg ? 0.35 : 1.0
+    };
+
+    scene.add(group);
+    objects.push(group);
   });
-  var mesh = new THREE.Mesh(geo, mat);
-  group.add(mesh);
 
-  /* Crisp edge lines */
-  var edges   = new THREE.EdgesGeometry(geo);
-  var lineMat = new THREE.LineBasicMaterial({
-    color:       0x5baadc,
-    transparent: true,
-    opacity:     edgeOpacity,
-    linewidth:   1,
-  });
-  var lines = new THREE.LineSegments(edges, lineMat);
-  group.add(lines);
+  // ─────────────────────────────────────────────────────────────
+  // Mouse / Scroll input (smoothed)
+  // ─────────────────────────────────────────────────────────────
+  var mx=0, my=0, tx=0, ty=0;
+  var scroll=0, scrollT=0;
 
-  return group;
-}
+  window.addEventListener('mousemove', function(e){
+    tx = (e.clientX / window.innerWidth  - 0.5) * 2;
+    ty = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive:true });
 
-/* ── Cube catalogue ── */
-/*
-  ZONE RULES (camera FOV 50, dist 14):
-  The hero content spans roughly x: -5 to +5 in world space.
-  Text column is x: -5 to 0, card column is x: 0 to +5.
-  
-  We place cubes at:
-    LEFT FRINGE:  x  -9  to  -5.5   (just outside/overlapping left edge)
-    RIGHT FRINGE: x  +5.5 to  +9    (just outside/overlapping right edge)
-    CORNERS:      pushed to y ±3.5+  (above/below content)
-    BG:           z  -4  to  -8     (deep behind, large, very faint)
-  
-  This way cubes never sit over the headline or bullets.
-*/
-var cubes = [];
+  window.addEventListener('scroll', function(){
+    scrollT = window.scrollY || 0;
+  }, { passive:true });
 
-var DEFS = [
-  /* LEFT side — varying sizes */
-  { x:-8.0, y: 1.5, z:-1.0, s:1.8, op:0.06, eo:0.55 },
-  { x:-6.5, y:-0.5, z: 0.2, s:1.2, op:0.08, eo:0.65 },
-  { x:-7.5, y:-2.5, z:-0.5, s:2.2, op:0.05, eo:0.45 },
-  { x:-5.8, y: 3.0, z:-1.5, s:0.9, op:0.09, eo:0.70 },
-  { x:-9.0, y:-0.2, z:-2.0, s:2.8, op:0.04, eo:0.35 },
-  { x:-6.2, y: 2.0, z: 0.5, s:0.7, op:0.10, eo:0.60 },
-  { x:-8.5, y: 3.8, z:-1.0, s:1.5, op:0.06, eo:0.50 },
+  // ─────────────────────────────────────────────────────────────
+  // Animation loop
+  // ─────────────────────────────────────────────────────────────
+  var clock = new THREE.Clock();
+  var active = true;
 
-  /* RIGHT side */
-  { x: 7.8, y: 1.0, z:-1.0, s:1.6, op:0.07, eo:0.55 },
-  { x: 6.2, y:-1.5, z: 0.3, s:1.1, op:0.08, eo:0.65 },
-  { x: 8.5, y:-2.8, z:-0.8, s:2.4, op:0.04, eo:0.40 },
-  { x: 6.8, y: 3.2, z:-1.2, s:0.8, op:0.09, eo:0.68 },
-  { x: 9.2, y: 0.5, z:-2.5, s:3.0, op:0.03, eo:0.30 },
-  { x: 7.0, y:-0.8, z: 0.8, s:0.6, op:0.10, eo:0.72 },
-  { x: 6.5, y: 2.5, z:-0.5, s:1.3, op:0.07, eo:0.58 },
+  function tick(){
+    requestAnimationFrame(tick);
+    if(!active) return;
 
-  /* TOP / BOTTOM corners — peek into frame */
-  { x:-3.0, y: 5.5, z:-2.0, s:2.0, op:0.05, eo:0.42 },
-  { x: 3.5, y:-5.0, z:-1.5, s:1.8, op:0.05, eo:0.45 },
-  { x:-1.0, y:-5.5, z:-2.5, s:2.5, op:0.04, eo:0.35 },
-  { x: 1.5, y: 5.8, z:-1.8, s:1.4, op:0.06, eo:0.50 },
+    var t = clock.getElapsedTime();
 
-  /* DEEP BG — large, very faint, slow */
-  { x:-4.0, y: 0.0, z:-7.0, s:5.0, op:0.025,eo:0.18 },
-  { x: 4.5, y: 1.0, z:-6.0, s:4.0, op:0.030,eo:0.20 },
-  { x: 0.0, y:-2.0, z:-8.0, s:6.0, op:0.020,eo:0.15 },
-];
+    // Ease inputs
+    mx += (tx - mx) * 0.06;
+    my += (ty - my) * 0.06;
+    scroll += (scrollT - scroll) * 0.08;
 
-/* Tint variants — subtle blue/navy/white range */
-var TINTS = [0xd0e8f8, 0xb8d4ee, 0xe8f2fa, 0xc4ddf0, 0xa8cce6, 0xdceefa];
+    // Mouse-follow light (gentle)
+    pt.position.set(mx * 7.5, -my * 4.5, 10);
 
-DEFS.forEach(function(d, i){
-  var tint = TINTS[i % TINTS.length];
-  /* Edge opacity slightly randomised */
-  var eo = d.eo * rnd(0.8, 1.2);
-  var g  = makeCube(d.s, d.op, Math.min(eo, 1.0), tint);
+    // Camera parallax (subtle; keep content stable)
+    if(!reduceMotion){
+      camera.position.x += (mx * 0.95 - camera.position.x) * 0.035;
+      camera.position.y += (-my * 0.65 - camera.position.y) * 0.035;
+    } else {
+      camera.position.x += (0 - camera.position.x) * 0.05;
+      camera.position.y += (0 - camera.position.y) * 0.05;
+    }
+    camera.lookAt(0, 0, 0);
 
-  g.position.set(
-    d.x + rnd(-0.4, 0.4),
-    d.y + rnd(-0.3, 0.3),
-    d.z + rnd(-0.3, 0.3)
-  );
+    // Normalize scroll to a small range
+    var s = clamp(scroll * 0.0011, 0, 2.2);
 
-  /* Random tumble start */
-  g.rotation.set(rnd(0, Math.PI*2), rnd(0, Math.PI*2), rnd(0, Math.PI*2));
+    objects.forEach(function(o){
+      var ud = o.userData;
+      var isBg = ud.basePos.z < -6.5;
 
-  var isBg = Math.abs(d.z) > 5;
-  g.userData = {
-    basePos:     g.position.clone(),
-    rx: rndS() * rnd(0.04, isBg ? 0.08 : 0.18),
-    ry: rndS() * rnd(0.06, isBg ? 0.10 : 0.24),
-    rz: rndS() * rnd(0.03, isBg ? 0.06 : 0.14),
-    floatSpd:    rnd(0.2, 0.7),
-    floatAmt:    isBg ? rnd(0.05,0.15) : rnd(0.15, 0.55),
-    floatOffset: rnd(0, Math.PI*2),
-    parallax:    isBg ? 0.15 : rnd(0.3, 0.8),
-  };
+      // Float
+      var floatY = Math.sin(t * ud.floatSpd + ud.floatPhase) * ud.floatAmt;
 
-  scene.add(g);
-  cubes.push(g);
-});
+      // Parallax
+      var px = mx * ud.parallax * 0.9;
+      var pz = my * ud.parallax * 0.35;
 
-/* ── Mouse / Scroll ── */
-var mx=0, my=0, mtx=0, mty=0, scrollY=0, scrollTgt=0;
+      // Scroll choreography:
+      // - foreground: a bit more rotation + slight drift
+      // - background: slow drift, less rotation
+      var scrollRot = (reduceMotion ? 0 : s) * 0.22 * ud.scrollK;
+      var scrollLift = (reduceMotion ? 0 : s) * (isBg ? 0.08 : 0.18);
 
-window.addEventListener('mousemove', function(e){
-  mtx = (e.clientX/window.innerWidth  - 0.5) * 2;
-  mty = (e.clientY/window.innerHeight - 0.5) * 2;
-},{passive:true});
+      o.position.x = ud.basePos.x + px;
+      o.position.y = ud.basePos.y + floatY - scrollLift;
+      o.position.z = ud.basePos.z + pz;
 
-window.addEventListener('scroll', function(){
-  scrollTgt = window.scrollY;
-},{passive:true});
+      if(!reduceMotion){
+        o.rotation.x = ud.baseRot.x + Math.sin(t * 0.35) * 0.06 + scrollRot * 0.55;
+        o.rotation.y = ud.baseRot.y + t * ud.ry * 0.035 + scrollRot;
+        o.rotation.z = ud.baseRot.z + t * ud.rz * 0.030 + scrollRot * 0.35;
+      }
 
-/* ── Animate ── */
-var clock  = new THREE.Clock();
-var active = true;
+      // Slight "breathing" opacity on edges for premium feel
+      // (applies to LineSegments child at index 1)
+      var edge = o.children[1];
+      if(edge && edge.material && !reduceMotion){
+        edge.material.opacity = clamp(edge.material.opacity * 0.985 + (0.18 + 0.06*Math.sin(t*0.7 + ud.floatPhase)) * 0.015, 0.06, 0.55);
+      }
+    });
 
-function animate(){
-  requestAnimationFrame(animate);
-  if(!active) return;
+    renderer.render(scene, camera);
+  }
 
-  var t = clock.getElapsedTime();
+  // Pause when hero not visible
+  try {
+    new IntersectionObserver(function(entries){
+      active = entries && entries[0] ? entries[0].isIntersecting : true;
+    }, { threshold: 0 }).observe(hero);
+  } catch(e){}
 
-  /* Lerp */
-  mx += (mtx - mx) * 0.05;
-  my += (mty - my) * 0.05;
-  scrollY += (scrollTgt - scrollY) * 0.08;
-
-  /* Point light follows mouse */
-  ptLight.position.set(mx * 8, -my * 5, 9);
-
-  /* Camera gentle parallax */
-  camera.position.x += (mx * 1.2 - camera.position.x) * 0.04;
-  camera.position.y += (-my * 0.8 - scrollY*0.0012 - camera.position.y) * 0.04;
-  camera.lookAt(0, 0, 0);
-
-  /* Animate cubes */
-  cubes.forEach(function(g){
-    var ud = g.userData;
-    g.rotation.x += ud.rx * 0.016;
-    g.rotation.y += ud.ry * 0.016;
-    g.rotation.z += ud.rz * 0.016;
-    g.position.y = ud.basePos.y + Math.sin(t * ud.floatSpd + ud.floatOffset) * ud.floatAmt;
-    g.position.x = ud.basePos.x + mx * ud.parallax * 0.8;
-    g.position.z = ud.basePos.z + my * ud.parallax * 0.3;
+  document.addEventListener('visibilitychange', function(){
+    active = !document.hidden;
   });
 
-  renderer.render(scene, camera);
-}
-
-animate();
-
-new IntersectionObserver(function(e){
-  active = e[0].isIntersecting;
-},{threshold:0}).observe(hero);
-
-document.addEventListener('visibilitychange',function(){
-  active = !document.hidden;
-});
-
+  tick();
 })();
 </script>
 
