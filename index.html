@@ -61,7 +61,7 @@
     }
     .nav-logo { display: flex; align-items: center; }
 
-    /* ── WebGL canvas — full background layer ── */
+    /* ── WebGL canvas — background layer ── */
     #hero-canvas {
       position: absolute;
       top: 0; left: 0;
@@ -81,8 +81,17 @@
       display: flex;
       align-items: center;
     }
-    /* No diagonal panel — full white */
-    #hero::before { display: none; }
+    /* Grey right panel — sits above canvas, below content */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 52%;
+      height: 100%;
+      background: linear-gradient(160deg, #f4f6f9 0%, #eef2f6 100%);
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 1;
+    }
     #hero .container { position: relative; z-index: 2; width: 100%; }
     .hero-inner {
       display: grid;
@@ -1004,366 +1013,188 @@
 
 <script src="scripts.js"></script>
 
-<!-- ═══════════════════ THREE.JS — MODERN GLASS SHARDS (DROP-IN) ═══════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- ═══════════════════ WEBGL DOT ANIMATION ═══════════════════ -->
 <script>
 (function(){
-  'use strict';
+'use strict';
 
-  var hero   = document.getElementById('hero');
-  var canvas = document.getElementById('hero-canvas');
-  if(!hero || !canvas || !window.THREE) return;
+var canvas = document.getElementById('hero-canvas');
+var hero   = document.getElementById('hero');
+if(!canvas || !hero) return;
 
-  var reduceMotion = false;
-  try {
-    reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  } catch(e){}
+var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+if(!gl) return;
 
-  // ─────────────────────────────────────────────────────────────
-  // Renderer
-  // ─────────────────────────────────────────────────────────────
-  var renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
-  } catch(e){ return; }
+function resize(){
+  canvas.width  = hero.offsetWidth;
+  canvas.height = hero.offsetHeight;
+  gl.viewport(0,0,canvas.width,canvas.height);
+}
+window.addEventListener('resize', resize);
+resize();
 
-  renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-  renderer.sortObjects = true;
+var VS = 'attribute vec2 a_pos; void main(){ gl_Position=vec4(a_pos,0.,1.); }';
 
-  // ─────────────────────────────────────────────────────────────
-  // Scene / Camera
-  // ─────────────────────────────────────────────────────────────
-  var scene  = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 220);
-  camera.position.set(0, 0, 15);
+var FS = [
+'precision mediump float;',
+'uniform vec2  u_res;',
+'uniform vec2  u_mouse;',
+'uniform float u_time;',
 
-  function resize(){
-    var W = hero.offsetWidth || window.innerWidth;
-    var H = hero.offsetHeight || window.innerHeight;
-    camera.aspect = W / H;
-    camera.updateProjectionMatrix();
-    renderer.setSize(W, H, false);
-  }
-  window.addEventListener('resize', resize, { passive:true });
-  resize();
+/* Brand-accurate colour palette: navy, steel blue, light blue */
+'vec3 palette(float t){',
+'  vec3 a=vec3(0.05,0.20,0.37);',
+'  vec3 b=vec3(0.03,0.14,0.28);',
+'  vec3 c=vec3(0.50,0.72,0.90);',
+'  vec3 d=vec3(0.08,0.30,0.52);',
+'  return a+b*cos(6.2831*(c*t+d));',
+'}',
 
-  // ─────────────────────────────────────────────────────────────
-  // Lighting (cleaner, more "studio" feel on white background)
-  // ─────────────────────────────────────────────────────────────
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+/* Soft filled circle */
+'float circle(vec2 uv, float r){',
+'  return 1.-smoothstep(r-0.008,r+0.008,length(uv));',
+'}',
 
-  var key = new THREE.DirectionalLight(0xbfe6ff, 2.2);
-  key.position.set(8, 10, 10);
-  scene.add(key);
+'void main(){',
+'  vec2 uv    = gl_FragCoord.xy / u_res;',    /* 0→1 */
+'  vec2 mouse = u_mouse / u_res;',
+'  uv.y = 1.-uv.y;',                           /* flip Y */
 
-  var fill = new THREE.DirectionalLight(0xffffff, 1.35);
-  fill.position.set(-10, 2, 8);
-  scene.add(fill);
+/* ── ZONE MASK ─────────────────────────────────────
+   Only render in the LEFT strip.
+   - Full density at far left  (uv.x < 0.04)
+   - Fade completely to 0 by   uv.x = 0.28
+   This keeps dots well clear of the text column
+   which starts around uv.x = 0.18 on wide screens.
+   Right side: tiny peek at far edge (> 0.94), very faint.
+────────────────────────────────────────────────── */
+'  float leftMask  = smoothstep(0.28, 0.02, uv.x);',
+'  float rightMask = smoothstep(0.94, 1.00, uv.x) * 0.35;',
+'  float zoneMask  = max(leftMask, rightMask);',
 
-  var rim = new THREE.DirectionalLight(0x7fb6ff, 1.15);
-  rim.position.set(0, -8, -8);
-  scene.add(rim);
+/* Vertical fade — fade near top/bottom edges */
+'  float vFade = smoothstep(0.,0.04,uv.y) * smoothstep(1.,0.95,uv.y);',
+'  zoneMask *= vFade;',
 
-  // Mouse-follow point light (subtle)
-  var pt = new THREE.PointLight(0x8cc9ff, 2.6, 50);
-  pt.position.set(0, 0, 10);
-  scene.add(pt);
+/* Early exit for fully masked pixels — saves GPU */
+'  if(zoneMask < 0.002){ gl_FragColor=vec4(0.); return; }',
 
-  // ─────────────────────────────────────────────────────────────
-  // Helpers
-  // ─────────────────────────────────────────────────────────────
-  function rnd(a,b){ return a + Math.random()*(b-a); }
-  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
-  function sign(){ return Math.random() > 0.5 ? 1 : -1; }
+/* ── Mouse ripple ── */
+'  vec2  toMouse = uv - mouse;',
+'  float mDist   = length(toMouse);',
+'  float ripple  = sin(mDist*22.-u_time*3.0)*0.010*exp(-mDist*4.0);',
+'  vec2  uvD     = uv + normalize(toMouse+0.001)*ripple;',
 
-  // ─────────────────────────────────────────────────────────────
-  // "Soft glow sprite" (cheap bloom-ish halo)
-  // ─────────────────────────────────────────────────────────────
-  function makeGlowSprite(colorHex, size){
-    var c = document.createElement('canvas');
-    c.width = 128; c.height = 128;
-    var ctx = c.getContext('2d');
-    var g = ctx.createRadialGradient(64,64,2, 64,64,64);
-    g.addColorStop(0.0, 'rgba(255,255,255,0.75)');
-    g.addColorStop(0.25, 'rgba(255,255,255,0.22)');
-    g.addColorStop(1.0, 'rgba(255,255,255,0.0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0,0,128,128);
+/* ── Slow wave warp ── */
+'  float wx = sin(uvD.y*5.0+u_time*0.35)*0.014',
+'           + sin(uvD.x*3.0+u_time*0.22)*0.008;',
+'  float wy = sin(uvD.x*6.0+u_time*0.28)*0.012;',
+'  vec2 uvW = uvD + vec2(wx,wy);',
 
-    var tex = new THREE.CanvasTexture(c);
-    tex.minFilter = THREE.LinearFilter;
-    tex.magFilter = THREE.LinearFilter;
+/* Scale to aspect */
+'  vec2 uvA = uvW * vec2(u_res.x/u_res.y, 1.0);',
 
-    var mat = new THREE.SpriteMaterial({
-      map: tex,
-      color: colorHex,
-      transparent: true,
-      opacity: 0.18,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
+/* ── DOT GRID ──
+   Two scales: coarse (8×8) + fine (16×16).
+   fract() gives position within each cell (0→1).
+   Subtract 0.5 → centre of cell, then draw a circle.
+   Size varies slowly with sin to give a breathing feel.
+──────────────── */
+'  float t   = u_time * 0.18;',
+'  float spd1= sin(uvA.x*2.1+uvA.y*1.8+t)*0.5+0.5;',  /* per-dot phase */
 
-    var s = new THREE.Sprite(mat);
-    s.scale.set(size, size, 1);
-    return s;
-  }
+/* Coarse grid — larger dots */
+'  float sc1  = 8.0;',
+'  vec2  g1   = fract(uvA*sc1)-0.5;',
+'  float r1   = 0.10 + sin(spd1*6.28+u_time*0.6)*0.028;',
+'  float dot1 = circle(g1, r1);',
 
-  // ─────────────────────────────────────────────────────────────
-  // Materials (better "glass" response)
-  // NOTE: three r128 physical params are limited; these work well.
-  // ─────────────────────────────────────────────────────────────
-  function makeGlassMaterial(tintHex, opacity){
-    return new THREE.MeshPhysicalMaterial({
-      color: tintHex,
-      metalness: 0.02,
-      roughness: 0.08,
-      transmission: 1.0,
-      transparent: true,
-      opacity: opacity,
-      ior: 1.35,
-      thickness: 0.55,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.18,
-      reflectivity: 0.45,
-      depthWrite: false
-    });
-  }
+/* Fine grid — smaller dots, offset half a cell */
+'  float sc2  = 16.0;',
+'  vec2  g2   = fract(uvA*sc2 + 0.5)-0.5;',
+'  float spd2 = sin(uvA.x*3.5+uvA.y*2.7+t*1.3)*0.5+0.5;',
+'  float r2   = 0.07 + sin(spd2*6.28+u_time*0.8)*0.018;',
+'  float dot2 = circle(g2, r2) * 0.55;',  /* finer layer, more transparent */
 
-  // ─────────────────────────────────────────────────────────────
-  // Geometry: "plates" and "shards" (thin boxes with varied aspect)
-  // ─────────────────────────────────────────────────────────────
-  function makePlate(w, h, d){
-    // d small => thin glass slab
-    var geo = new THREE.BoxGeometry(w, h, d);
-    return geo;
-  }
+/* ── Colour ── */
+'  float colorT = uvD.x*0.5 + uvD.y*0.3 + u_time*0.07',
+'               + sin(uvA.x*4.+uvA.y*3.+u_time*0.4)*0.15;',
+'  vec3 col = palette(colorT);',
 
-  function makeShard(w, h, d){
-    // Irregular shard: a thin box + slightly skewed by scaling + rotation
-    // (Keep it cheap; still reads as "shard" when thin + varied proportions)
-    var geo = new THREE.BoxGeometry(w, h, d);
-    return geo;
-  }
+/* Mouse proximity glow */
+'  float mGlow = exp(-mDist*6.0)*0.25;',
+'  col += mGlow * vec3(0.25,0.50,0.85);',
 
-  // Edge lines (cleaner than heavy cubes)
-  function makeEdgeLines(geo, opacity){
-    var edges = new THREE.EdgesGeometry(geo, 18);
-    var mat = new THREE.LineBasicMaterial({
-      color: 0x6bbcff,
-      transparent: true,
-      opacity: opacity,
-      depthWrite: false
-    });
-    return new THREE.LineSegments(edges, mat);
-  }
+/* ── Final alpha ──
+   Max combined dot signal × zone × 0.65 keeps it clearly
+   transparent — dots are visible but never muddy the text.
+──────────────── */
+'  float dots  = clamp(dot1+dot2, 0., 1.);',
+'  float alpha = dots * zoneMask * 0.65;',
+'  alpha += mGlow * zoneMask * 0.18;',
+'  alpha = clamp(alpha,0.,1.);',
 
-  // ─────────────────────────────────────────────────────────────
-  // Layout zones (avoid text + cards)
-  // ─────────────────────────────────────────────────────────────
-  // World-space content zone roughly x: [-5..+5], y: [-3..+3]
-  // Place objects mostly on fringes / corners / deep background.
-  var objects = [];
+'  gl_FragColor = vec4(clamp(col,0.,1.), alpha);',
+'}'
+].join('\n');
 
-  var palette = [
-    0xeaf6ff, // icy white
-    0xd8efff, // light blue
-    0xcfe6ff, // cool blue
-    0xf1fbff  // near-white
-  ];
+/* ── Compile helpers ── */
+function shader(type,src){
+  var s=gl.createShader(type);
+  gl.shaderSource(s,src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){ console.warn(gl.getShaderInfoLog(s)); return null; }
+  return s;
+}
+var vs=shader(gl.VERTEX_SHADER,VS), fs=shader(gl.FRAGMENT_SHADER,FS);
+if(!vs||!fs) return;
 
-  // Hand-tuned placements (more "art-directed" than random)
-  // type: 'plate' | 'shard'
-  var layout = [
-    // LEFT fringe
-    {t:'plate', x:-8.4, y: 1.6, z:-1.2, w:2.9, h:0.55, d:0.10, op:0.18, edge:0.38},
-    {t:'shard', x:-7.1, y:-0.2, z: 0.4, w:1.1, h:1.9, d:0.08, op:0.14, edge:0.32},
-    {t:'plate', x:-6.6, y:-2.7, z:-0.6, w:2.2, h:0.42, d:0.09, op:0.16, edge:0.34},
-    {t:'shard', x:-8.8, y: 3.8, z:-1.5, w:1.2, h:2.6, d:0.08, op:0.12, edge:0.26},
+var prog=gl.createProgram();
+gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog);
+if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){ console.warn(gl.getProgramInfoLog(prog)); return; }
+gl.useProgram(prog);
 
-    // RIGHT fringe
-    {t:'plate', x: 8.1, y: 1.1, z:-1.0, w:3.1, h:0.58, d:0.10, op:0.18, edge:0.38},
-    {t:'shard', x: 6.9, y:-1.6, z: 0.6, w:1.0, h:2.1, d:0.08, op:0.14, edge:0.30},
-    {t:'plate', x: 7.9, y:-3.0, z:-0.9, w:2.4, h:0.44, d:0.09, op:0.16, edge:0.34},
-    {t:'shard', x: 9.0, y: 3.3, z:-1.3, w:1.2, h:2.8, d:0.08, op:0.11, edge:0.24},
+/* Full-screen quad */
+var buf=gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+var aPos=gl.getAttribLocation(prog,'a_pos');
+gl.enableVertexAttribArray(aPos);
+gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
 
-    // Corners / peek-ins
-    {t:'plate', x:-2.8, y: 5.8, z:-2.2, w:3.4, h:0.46, d:0.10, op:0.12, edge:0.22},
-    {t:'plate', x: 3.3, y:-5.2, z:-1.8, w:3.0, h:0.42, d:0.10, op:0.12, edge:0.22},
+var uRes  =gl.getUniformLocation(prog,'u_res');
+var uMouse=gl.getUniformLocation(prog,'u_mouse');
+var uTime =gl.getUniformLocation(prog,'u_time');
 
-    // Deep background (large, very soft)
-    {t:'plate', x:-4.0, y: 0.4, z:-8.0, w:6.5, h:0.75, d:0.12, op:0.06, edge:0.10},
-    {t:'shard', x: 4.8, y: 1.2, z:-7.0, w:2.2, h:4.6, d:0.10, op:0.05, edge:0.10},
-    {t:'plate', x: 0.2, y:-2.4, z:-9.5, w:7.4, h:0.85, d:0.12, op:0.05, edge:0.08}
-  ];
+gl.enable(gl.BLEND);
+gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 
-  layout.forEach(function(d, i){
-    var tint = palette[i % palette.length];
+/* Mouse */
+var mx=200,my=200,tmx=200,tmy=200;
+window.addEventListener('mousemove',function(e){ tmx=e.clientX; tmy=e.clientY; },{passive:true});
 
-    var geo = (d.t === 'plate')
-      ? makePlate(d.w, d.h, d.d)
-      : makeShard(d.w, d.h, d.d);
+var active=true;
+var t0=performance.now();
 
-    var mat = makeGlassMaterial(tint, d.op);
+function draw(){
+  requestAnimationFrame(draw);
+  if(!active) return;
 
-    var group = new THREE.Group();
-    var mesh  = new THREE.Mesh(geo, mat);
-    group.add(mesh);
+  mx+=(tmx-mx)*0.07; my+=(tmy-my)*0.07;
 
-    var lines = makeEdgeLines(geo, d.edge);
-    group.add(lines);
+  var W=canvas.width, H=canvas.height;
+  var t=(performance.now()-t0)/1000;
 
-    // Add a subtle glow halo behind some objects (not all)
-    if(i % 2 === 0){
-      var glow = makeGlowSprite(0x7fbfff, rnd(2.4, 4.0));
-      glow.position.set(0, 0, -0.2);
-      group.add(glow);
-    }
+  gl.clearColor(0,0,0,0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.uniform2f(uRes,W,H);
+  gl.uniform2f(uMouse,mx,H-my);
+  gl.uniform1f(uTime,t);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+}
+draw();
 
-    // Position
-    group.position.set(
-      d.x + rnd(-0.35, 0.35),
-      d.y + rnd(-0.25, 0.25),
-      d.z + rnd(-0.25, 0.25)
-    );
+new IntersectionObserver(function(e){ active=e[0].isIntersecting; },{threshold:0}).observe(hero);
 
-    // Start rotation (more controlled)
-    group.rotation.set(
-      rnd(-0.6, 0.6),
-      rnd(-0.8, 0.8),
-      rnd(-0.4, 0.4)
-    );
-
-    // Make shards look less boxy by non-uniform scale
-    if(d.t === 'shard'){
-      group.scale.set(rnd(0.9,1.15), rnd(0.95,1.25), 1);
-    }
-
-    var isBg = d.z < -6.5;
-    group.userData = {
-      basePos: group.position.clone(),
-      baseRot: group.rotation.clone(),
-      // rotation rates
-      rx: sign() * rnd(0.06, isBg ? 0.10 : 0.22),
-      ry: sign() * rnd(0.08, isBg ? 0.12 : 0.28),
-      rz: sign() * rnd(0.03, isBg ? 0.06 : 0.16),
-      // float
-      floatSpd: rnd(0.25, isBg ? 0.45 : 0.85),
-      floatAmt: isBg ? rnd(0.05, 0.16) : rnd(0.14, 0.55),
-      floatPhase: rnd(0, Math.PI * 2),
-      // parallax depth
-      parallax: isBg ? 0.14 : rnd(0.28, 0.72),
-      // scroll response multiplier
-      scrollK: isBg ? 0.35 : 1.0
-    };
-
-    scene.add(group);
-    objects.push(group);
-  });
-
-  // ─────────────────────────────────────────────────────────────
-  // Mouse / Scroll input (smoothed)
-  // ─────────────────────────────────────────────────────────────
-  var mx=0, my=0, tx=0, ty=0;
-  var scroll=0, scrollT=0;
-
-  window.addEventListener('mousemove', function(e){
-    tx = (e.clientX / window.innerWidth  - 0.5) * 2;
-    ty = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive:true });
-
-  window.addEventListener('scroll', function(){
-    scrollT = window.scrollY || 0;
-  }, { passive:true });
-
-  // ─────────────────────────────────────────────────────────────
-  // Animation loop
-  // ─────────────────────────────────────────────────────────────
-  var clock = new THREE.Clock();
-  var active = true;
-
-  function tick(){
-    requestAnimationFrame(tick);
-    if(!active) return;
-
-    var t = clock.getElapsedTime();
-
-    // Ease inputs
-    mx += (tx - mx) * 0.06;
-    my += (ty - my) * 0.06;
-    scroll += (scrollT - scroll) * 0.08;
-
-    // Mouse-follow light (gentle)
-    pt.position.set(mx * 7.5, -my * 4.5, 10);
-
-    // Camera parallax (subtle; keep content stable)
-    if(!reduceMotion){
-      camera.position.x += (mx * 0.95 - camera.position.x) * 0.035;
-      camera.position.y += (-my * 0.65 - camera.position.y) * 0.035;
-    } else {
-      camera.position.x += (0 - camera.position.x) * 0.05;
-      camera.position.y += (0 - camera.position.y) * 0.05;
-    }
-    camera.lookAt(0, 0, 0);
-
-    // Normalize scroll to a small range
-    var s = clamp(scroll * 0.0011, 0, 2.2);
-
-    objects.forEach(function(o){
-      var ud = o.userData;
-      var isBg = ud.basePos.z < -6.5;
-
-      // Float
-      var floatY = Math.sin(t * ud.floatSpd + ud.floatPhase) * ud.floatAmt;
-
-      // Parallax
-      var px = mx * ud.parallax * 0.9;
-      var pz = my * ud.parallax * 0.35;
-
-      // Scroll choreography:
-      // - foreground: a bit more rotation + slight drift
-      // - background: slow drift, less rotation
-      var scrollRot = (reduceMotion ? 0 : s) * 0.22 * ud.scrollK;
-      var scrollLift = (reduceMotion ? 0 : s) * (isBg ? 0.08 : 0.18);
-
-      o.position.x = ud.basePos.x + px;
-      o.position.y = ud.basePos.y + floatY - scrollLift;
-      o.position.z = ud.basePos.z + pz;
-
-      if(!reduceMotion){
-        o.rotation.x = ud.baseRot.x + Math.sin(t * 0.35) * 0.06 + scrollRot * 0.55;
-        o.rotation.y = ud.baseRot.y + t * ud.ry * 0.035 + scrollRot;
-        o.rotation.z = ud.baseRot.z + t * ud.rz * 0.030 + scrollRot * 0.35;
-      }
-
-      // Slight "breathing" opacity on edges for premium feel
-      // (applies to LineSegments child at index 1)
-      var edge = o.children[1];
-      if(edge && edge.material && !reduceMotion){
-        edge.material.opacity = clamp(edge.material.opacity * 0.985 + (0.18 + 0.06*Math.sin(t*0.7 + ud.floatPhase)) * 0.015, 0.06, 0.55);
-      }
-    });
-
-    renderer.render(scene, camera);
-  }
-
-  // Pause when hero not visible
-  try {
-    new IntersectionObserver(function(entries){
-      active = entries && entries[0] ? entries[0].isIntersecting : true;
-    }, { threshold: 0 }).observe(hero);
-  } catch(e){}
-
-  document.addEventListener('visibilitychange', function(){
-    active = !document.hidden;
-  });
-
-  tick();
 })();
 </script>
 
