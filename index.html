@@ -59,7 +59,7 @@
       display: block;
       flex-shrink: 0;
     }
-    .nav-logo { display: flex; align-items: center; }
+    .nav-logo { display: inline-flex; align-items: center; }
 
     /* ── WebGL canvas — background layer ── */
     #hero-canvas {
@@ -573,9 +573,7 @@
   <div class="container">
     <div class="nav-inner">
 
-      <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">
-        <a href="/" class="nav-logo">Synapse<span>Edge</span></a>
-      </a>
+      <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">Synapse<span>Edge</span></a>
 
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
@@ -593,6 +591,7 @@
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
+
     </div>
   </div>
 </nav>
