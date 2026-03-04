@@ -3,49 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <title>Synapse Edge Strategic Capabilities | B2B Growth Strategy, CRM & SEO Services</title>
-  <meta name="description" content="Synapse Edge's five integrated B2B revenue disciplines: Growth Strategy, Sales Operations & CRM, SEO & Local Authority, Email Automation, and AI-Driven Infrastructure." />
+  <meta name="description" content="Synapse Edge's five integrated B2B revenue disciplines: Growth Strategy, Sales Operations & CRM, SEO & Local Authority, Marketing Automation, and AI-Driven Infrastructure." />
   <link rel="canonical" href="https://www.synapseedge.com/services.html" />
+
   <meta property="og:title" content="Synapse Edge | Strategic Capabilities" />
   <meta property="og:description" content="Strategy, CRM, SEO, automation, and AI aligned into one scalable revenue system." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.synapseedge.com/services.html" />
-  
+
   <!-- Favicon block -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Synapse Edge","url":"https://synapseedge.com","logo":"/assets/logo.svg","sameAs":[]}</script>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.synapseedge.com/#organization",
+        "name": "Synapse Edge",
+        "url": "https://www.synapseedge.com/",
+        "logo": "https://www.synapseedge.com/assets/logo.png",
+        "email": "yaroslav.bogday@synapseedge.com",
+        "telephone": "+1-878-236-3229"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.synapseedge.com/#website",
+        "url": "https://www.synapseedge.com/",
+        "name": "Synapse Edge",
+        "publisher": { "@id": "https://www.synapseedge.com/#organization" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
 <nav id="navbar" role="navigation" aria-label="Primary">
   <div class="container">
     <div class="nav-inner">
 
-      <a href="/" class="nav-logo">Synapse<span>Edge</span></a>
+      <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">
+        <img src="/assets/logo.png" alt="Synapse Edge" class="nav-logo-img" />
+      </a>
 
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
-        <li><a href="services.html">Services</a></li>
+        <li><a href="services.html" aria-current="page">Services</a></li>
         <li><a href="approach.html">Our Approach</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
 
       <div style="display:flex; gap:10px; align-items:center;">
-        <a href="contact.html" class="btn btn-secondary">
-          Contact Us
-        </a>
-
-        <a href="strategy-call.html" class="btn btn-primary">
-          Request a Strategy Call
-        </a>
+        <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+        <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
       </div>
 
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -67,7 +90,7 @@
 </header>
 
 <!-- ═══ 01 STRATEGIC ANALYSIS ═══ -->
-<section class="services-section" aria-labelledby="svc-h2-1">
+<section id="growth-strategy" class="services-section" aria-labelledby="svc-h2-1">
   <div class="container">
     <div class="svc-block fade-up">
       <div class="svc-meta">
@@ -107,7 +130,7 @@
 </section>
 
 <!-- ═══ 02 SALES OPS & CRM ═══ -->
-<section class="services-section" aria-labelledby="svc-h2-2">
+<section id="sales-ops-crm" class="services-section" aria-labelledby="svc-h2-2">
   <div class="container">
     <div class="svc-block fade-up">
       <div class="svc-meta">
@@ -147,7 +170,7 @@
 </section>
 
 <!-- ═══ 03 SEO & LOCAL ═══ -->
-<section class="services-section" aria-labelledby="svc-h2-3">
+<section id="seo-local" class="services-section" aria-labelledby="svc-h2-3">
   <div class="container">
     <div class="svc-block fade-up">
       <div class="svc-meta">
@@ -186,8 +209,8 @@
   </div>
 </section>
 
-<!-- ═══ 04 EMAIL & AUTOMATION ═══ -->
-<section class="services-section" aria-labelledby="svc-h2-4">
+<!-- ═══ 04 MARKETING AUTOMATION ═══ -->
+<section id="marketing-automation" class="services-section" aria-labelledby="svc-h2-4">
   <div class="container">
     <div class="svc-block fade-up">
       <div class="svc-meta">
@@ -219,7 +242,7 @@
 </section>
 
 <!-- ═══ 05 AI INFRASTRUCTURE ═══ -->
-<section class="services-section" aria-labelledby="svc-h2-5">
+<section id="ai-infrastructure" class="services-section" aria-labelledby="svc-h2-5">
   <div class="container">
     <div class="svc-block fade-up">
       <div class="svc-meta">
@@ -257,7 +280,8 @@
     </div>
   </div>
 </section>
-  <!-- ═══════════════════ CTA ═══════════════════ -->
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
 <section class="cta-block" aria-labelledby="svc-cta-h2">
   <div class="container">
     <div class="cta-inner fade-up">
@@ -273,23 +297,26 @@
 
 </main>
 
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer role="contentinfo">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-name">Synapse<span>Edge</span></div>
-        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies with complex commercial environments.</p>
+        <img src="/assets/logo.png" alt="Synapse Edge" class="footer-logo-img" />
+        <p class="footer-tagline">B2B Revenue Architecture. Built for established companies navigating the digital and AI shift.</p>
       </div>
+
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="services.html">Growth Strategy</a></li>
-          <li><a href="services.html">Sales Operations &amp; CRM</a></li>
-          <li><a href="services.html">SEO &amp; Local Authority</a></li>
-          <li><a href="services.html">Email Automation</a></li>
-          <li><a href="services.html">AI Infrastructure</a></li>
+          <li><a href="services.html#growth-strategy">Growth Strategy</a></li>
+          <li><a href="services.html#sales-ops-crm">Sales Operations &amp; CRM</a></li>
+          <li><a href="services.html#seo-local">SEO &amp; Local Authority</a></li>
+          <li><a href="services.html#marketing-automation">Marketing Automation</a></li>
+          <li><a href="services.html#ai-infrastructure">AI Infrastructure</a></li>
         </ul>
       </div>
+
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
@@ -299,16 +326,21 @@
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
+
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
           <li><a href="contact.html">Request Audit</a></li>
-          <li><a href="contact.html#form">Book Strategy Call</a></li>
+          <li><a href="strategy-call.html">Book Strategy Call</a></li>
+          <li><a href="mailto:yaroslav.bogday@synapseedge.com">Send Email</a></li>
+          <li><a href="tel:+18782363229">Call +1 (878) 236-3229</a></li>
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
       <p>© 2026 Synapse Edge. All rights reserved.</p>
+      <p>Built for enterprise B2B growth infrastructure.</p>
     </div>
   </div>
 </footer>
