@@ -988,41 +988,60 @@
     </div>
   </div>
 
-  <script>
-    // Optional: nice success message without leaving the page (still uses Formspree POST)
-    (function () {
-      const form = document.getElementById('lead-magnet-form');
-      const status = document.getElementById('lm-status');
-      if (!form || !status) return;
+ <script>
+(function () {
+  const form = document.getElementById('lead-magnet-form');
+  const status = document.getElementById('lm-status');
+  if (!form || !status) return;
 
-      form.addEventListener('submit', async function (e) {
-        // If fetch isn't supported, let normal POST happen
-        if (!window.fetch) return;
+  let submitting = false;
 
-        e.preventDefault();
-        status.textContent = 'Sending...';
+  form.addEventListener('submit', async function (e) {
+    if (submitting) return; // prevent double clicks
+    submitting = true;
 
-        try {
-          const data = new FormData(form);
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-          });
+    const btn = form.querySelector('button[type="submit"]');
+    const originalBtnText = btn ? btn.textContent : '';
 
-          if (res.ok) {
-            status.textContent = 'Done — check your inbox in a minute.';
-            form.reset();
-          } else {
-            status.textContent = 'Something went wrong. Please try again or use the Contact page.';
-          }
-        } catch (err) {
-          status.textContent = 'Network error. Please try again.';
-        }
+    // Always show feedback
+    status.textContent = 'Sending...';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+    // If fetch isn't available, do normal submit
+    if (!window.fetch) return;
+
+    e.preventDefault();
+
+    try {
+      const data = new FormData(form);
+
+      // Try AJAX submit first
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' },
       });
-    })();
-  </script>
-</section>
+
+      if (res.ok) {
+        status.textContent = '✅ Submitted. Check your inbox in 1–2 minutes.';
+        form.reset();
+        if (btn) { btn.disabled = false; btn.textContent = originalBtnText; }
+        submitting = false;
+        return;
+      }
+
+      // If Formspree rejected (400/403/etc), fall back to normal submit
+      status.textContent = 'Submitting...';
+      HTMLFormElement.prototype.submit.call(form);
+
+    } catch (err) {
+      // Network/CORS/adblock/etc — fall back to normal submit
+      status.textContent = 'Submitting...';
+      HTMLFormElement.prototype.submit.call(form);
+    }
+  });
+})();
+</script>
 
 <!-- ═══════════ STRUCTURAL PROBLEM ═══════════ -->
 <section id="structural-problem" class="section" aria-labelledby="problem-h2">
