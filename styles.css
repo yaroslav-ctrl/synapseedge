@@ -590,23 +590,17 @@ footer {
   background-image:radial-gradient(rgba(255,255,255,0.022) 1px, transparent 1px);
   background-size:28px 28px;
 }
+/* Scoped overrides — only affect text inside the dark industries section */
+#industries .eyebrow{
+  color:rgba(160,210,255,0.75);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+}
+#industries .section-header h2{ color:#fff; }
+#industries .section-header p{ color:rgba(255,255,255,0.45); }
 
-.container{max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
 
-.section-header{text-align:center;margin-bottom:52px}
-.eyebrow{
-  display:inline-block;font-size:0.64rem;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;
-  color:rgba(160,210,255,0.7);margin-bottom:14px;
-}
-.section-header h2{
-  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:#fff;
-  letter-spacing:-0.028em;line-height:1.18;margin-bottom:12px;
-}
-.section-header p{
-  font-size:0.94rem;color:rgba(255,255,255,0.42);
-  max-width:460px;margin:0 auto;line-height:1.65;
-}
+
 
 /* Grid — always 4 cols desktop, 2 cols mobile */
 .industries-grid{
@@ -694,7 +688,6 @@ footer {
 @media(max-width:600px){
   #industries{padding:60px 0 68px}
   .industries-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .container{padding:0 16px}
   .industry-card{height:210px}
   .industry-sub{display:none}
 }
