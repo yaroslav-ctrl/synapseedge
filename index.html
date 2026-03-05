@@ -714,92 +714,307 @@
   </div>
 </section>
 
-<!-- ═══════════ FREE LEAD MAGNET ═══════════ -->
-<section id="lead-magnet" aria-labelledby="lm-h2">
-  <div class="container">
-    <div class="lm-inner">
+<!-- ═════════════════ LEAD MAGNET ═════════════════ -->
+<section id="lead-magnet" class="leadmagnet-section" aria-labelledby="leadmagnet-h2">
+  <style>
+    .leadmagnet-section{
+      padding: 84px 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.08), transparent 38%),
+        radial-gradient(circle at 85% 75%, rgba(255,255,255,0.06), transparent 40%),
+        linear-gradient(135deg, #163a5c, #1f5078);
+    }
+    .leadmagnet-grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
+      align-items:center;
+    }
+    @media (max-width: 980px){
+      .leadmagnet-grid{ grid-template-columns: 1fr; gap: 28px; }
+    }
 
-      <!-- LEFT: Value proposition -->
-      <div class="lm-left fade-up">
-        <div class="lm-eyebrow">✦ Free Download</div>
-        <h2 id="lm-h2">
-          Find Out Exactly <span>Where Your Pipeline Is Leaking</span>
+    .lm-left .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(7,24,41,0.25);
+      color: rgba(234,242,255,0.9);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .lm-left h2{
+      margin: 0 0 14px 0;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      color: #EAF2FF;
+      font-weight: 800;
+    }
+    .lm-left h2 .accent{
+      color:#8fd0ff;
+    }
+    .lm-left p{
+      margin: 0 0 18px 0;
+      color: rgba(234,242,255,0.8);
+      max-width: 56ch;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .lm-bullets{
+      margin: 22px 0 0 0;
+      padding: 0;
+      list-style: none;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .lm-bullets li{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      color: rgba(234,242,255,0.85);
+      line-height:1.45;
+      font-size: 14px;
+    }
+    .lm-check{
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      display:grid;
+      place-items:center;
+      margin-top: 1px;
+      background: rgba(7,24,41,0.25);
+      color:#8fd0ff;
+      font-weight:700;
+    }
+
+    .lm-card{
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.25);
+      padding: 28px;
+    }
+    .lm-card .eyebrow{
+      display:block;
+      color: #1f5078;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .lm-card h3{
+      margin: 0 0 10px 0;
+      font-size: 26px;
+      line-height: 1.2;
+      color: #0b233a;
+      font-weight: 800;
+    }
+    .lm-card .sub{
+      margin: 0 0 18px 0;
+      color: rgba(11,35,58,0.72);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .lm-form{
+      display:grid;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .lm-row-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 520px){
+      .lm-row-2{ grid-template-columns: 1fr; }
+    }
+
+    .lm-field label{
+      display:block;
+      font-size: 12px;
+      color: rgba(11,35,58,0.78);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .lm-field input{
+      width:100%;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(11,35,58,0.14);
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease;
+      background: #fff;
+    }
+    .lm-field input:focus{
+      border-color: rgba(58,141,255,0.55);
+      box-shadow: 0 0 0 4px rgba(58,141,255,0.18);
+    }
+
+    .lm-submit{
+      margin-top: 6px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .lm-submit button{
+      height: 52px;
+      border-radius: 12px;
+      border: none;
+      background: #0b3a5a;
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .lm-submit button:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+    .lm-fineprint{
+      display:flex;
+      gap: 8px;
+      justify-content:center;
+      align-items:center;
+      color: rgba(11,35,58,0.55);
+      font-size: 12px;
+      text-align:center;
+      margin-top: 2px;
+    }
+    .lm-status{
+      min-height: 18px;
+      font-size: 13px;
+      color: rgba(11,35,58,0.75);
+      text-align:center;
+    }
+  </style>
+
+  <div class="container">
+    <div class="leadmagnet-grid">
+
+      <!-- LEFT -->
+      <div class="lm-left">
+        <div class="pill">✦ Free Download</div>
+
+        <h2 id="leadmagnet-h2">
+          Find Out Exactly <span class="accent">Where<br/>Your Pipeline Is Leaking</span>
         </h2>
-        <p class="lm-lead">
-          Most B2B companies are losing leads they don't even know about. This 50-question checklist walks you through every layer of your commercial system — from goals to sales — so you know precisely where to fix first.
+
+        <p>
+          Most B2B companies are losing leads they don’t even know about.
+          This 50-question checklist walks you through every layer of your commercial system — from goals to sales —
+          so you know precisely where to fix first.
         </p>
 
-        <div class="lm-whats-inside">
-          <div class="lm-item">
-            <div class="lm-item-check">✓</div>
-            <span><strong>7 diagnostic modules</strong> — Goals, Leads, Calls, CRM, Follow-up, Website, SEO &amp; AI</span>
-          </div>
-          <div class="lm-item">
-            <div class="lm-item-check">✓</div>
-            <span><strong>50 yes/no questions</strong> — takes less than 15 minutes to complete</span>
-          </div>
-          <div class="lm-item">
-            <div class="lm-item-check">✓</div>
-            <span><strong>Built-in scoring system</strong> — instantly shows if you're "leaking", "capped", or "scale-ready"</span>
-          </div>
-          <div class="lm-item">
-            <div class="lm-item-check">✓</div>
-            <span><strong>Used inside real B2B audits</strong> — the same framework we use for paid engagements</span>
-          </div>
-        </div>
-
+        <ul class="lm-bullets">
+          <li><span class="lm-check">✓</span><strong>7 diagnostic modules</strong> — Goals, Leads, Calls, CRM, Follow-up, Website, SEO &amp; AI</li>
+          <li><span class="lm-check">✓</span><strong>50 yes/no questions</strong> — takes less than 15 minutes to complete</li>
+          <li><span class="lm-check">✓</span><strong>Built-in scoring system</strong> — instantly shows if you’re “leaking”, “capped”, or “scale-ready”</li>
+          <li><span class="lm-check">✓</span><strong>Used inside real B2B audits</strong> — the same framework we use for paid engagements</li>
+        </ul>
       </div>
 
-      <!-- RIGHT: Form -->
-      <div class="lm-right fade-up">
-        <div class="lm-form-eyebrow">Get Instant Access</div>
-        <div class="lm-form-title">Free Lead Management Checklist</div>
-        <div class="lm-form-sub">
-          Enter your details and we'll send the checklist directly to your inbox. Takes 5 seconds.
-        </div>
+      <!-- RIGHT: Working Formspree form -->
+      <div class="lm-card" role="region" aria-label="Lead management checklist form">
+        <span class="eyebrow">Get Instant Access</span>
+        <h3>Free Lead Management Checklist</h3>
+        <p class="sub">
+          Enter your details and we’ll send the checklist directly to your inbox. Takes 5 seconds.
+        </p>
 
-        <form class="lm-form" id="checklist-form" onsubmit="handleChecklistSubmit(event)">
-          <div class="lm-field-group">
+        <form
+          id="lead-magnet-form"
+          class="lm-form"
+          action="https://formspree.io/f/mjgeqpvq"
+          method="POST"
+          novalidate
+        >
+          <!-- Formspree settings -->
+          <input type="hidden" name="_subject" value="New Lead Magnet Download — synapseedge.com (Lead Management Checklist)" />
+          <input type="hidden" name="source" value="Lead Magnet — Checklist (index page)" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <div class="lm-row-2">
             <div class="lm-field">
-              <label for="lm-fname">First Name</label>
-              <input type="text" id="lm-fname" name="fname" placeholder="John" required />
+              <label for="lm-first">First Name</label>
+              <input type="text" id="lm-first" name="first_name" placeholder="John" autocomplete="given-name" required />
             </div>
             <div class="lm-field">
-              <label for="lm-lname">Last Name</label>
-              <input type="text" id="lm-lname" name="lname" placeholder="Smith" required />
+              <label for="lm-last">Last Name</label>
+              <input type="text" id="lm-last" name="last_name" placeholder="Smith" autocomplete="family-name" required />
             </div>
           </div>
+
           <div class="lm-field">
             <label for="lm-email">Work Email</label>
-            <input type="email" id="lm-email" name="email" placeholder="john@company.com" required />
+            <input type="email" id="lm-email" name="email" placeholder="john@company.com" autocomplete="email" required />
           </div>
+
           <div class="lm-field">
             <label for="lm-company">Company Name</label>
-            <input type="text" id="lm-company" name="company" placeholder="Acme Corp" required />
+            <input type="text" id="lm-company" name="company" placeholder="Acme Corp" autocomplete="organization" />
           </div>
+
           <div class="lm-field">
             <label for="lm-industry">Industry</label>
             <input type="text" id="lm-industry" name="industry" placeholder="e.g. Heavy Equipment, Industrial, Real Estate" />
           </div>
-          <button type="submit" class="lm-submit" id="lm-btn">
-            Send Me the Checklist →
-          </button>
-          <div class="lm-form-guarantee">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            No spam. Unsubscribe anytime. Your data is safe.
+
+          <div class="lm-submit">
+            <button type="submit">Send Me the Checklist →</button>
+            <div id="lm-status" class="lm-status" aria-live="polite"></div>
+            <div class="lm-fineprint">
+              <span aria-hidden="true">🔒</span>
+              <span>No spam. Unsubscribe anytime. Your data is safe.</span>
+            </div>
           </div>
         </form>
-
-        <!-- Success state (hidden) -->
-        <div id="lm-success" style="display:none; text-align:center; padding:20px 0;">
-          <div style="font-size:2.5rem; margin-bottom:12px;">✅</div>
-          <div style="font-size:1.1rem; font-weight:800; color:var(--text); margin-bottom:8px;">Check your inbox!</div>
-          <div style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">We've sent the checklist to your email. While you wait — <a href="strategy-call.html" style="color:var(--primary); font-weight:600;">book a strategy call</a> to go through the results together.</div>
-        </div>
       </div>
 
     </div>
   </div>
+
+  <script>
+    // Optional: nice success message without leaving the page (still uses Formspree POST)
+    (function () {
+      const form = document.getElementById('lead-magnet-form');
+      const status = document.getElementById('lm-status');
+      if (!form || !status) return;
+
+      form.addEventListener('submit', async function (e) {
+        // If fetch isn't supported, let normal POST happen
+        if (!window.fetch) return;
+
+        e.preventDefault();
+        status.textContent = 'Sending...';
+
+        try {
+          const data = new FormData(form);
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            status.textContent = 'Done — check your inbox in a minute.';
+            form.reset();
+          } else {
+            status.textContent = 'Something went wrong. Please try again or use the Contact page.';
+          }
+        } catch (err) {
+          status.textContent = 'Network error. Please try again.';
+        }
+      });
+    })();
+  </script>
 </section>
 
 <!-- ═══════════ STRUCTURAL PROBLEM ═══════════ -->
