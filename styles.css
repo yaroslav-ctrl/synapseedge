@@ -190,6 +190,31 @@ p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.75; }
   transform: translateY(-3px);
   border-color: var(--border-dark);
 }
+/* NAV LOGO CONTAINER */
+.nav-logo{
+  display:flex;
+  align-items:center;
+}
+
+/* LOGO IMAGE */
+.nav-logo-img{
+  height:36px;
+  width:auto;
+  display:block;
+}
+/* Header logo */
+.nav-logo-img{
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Footer logo */
+.footer-logo-img{
+  height:50px;
+  width:auto;
+  margin-bottom:14px;
+}
 
 /* ─── Pill tag ─── */
 .tag {
@@ -260,7 +285,7 @@ p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.75; }
   color: var(--primary);
   background: var(--primary-light);
 }
-.nav-cta { margin-left: 12px; display: flex; gap: 10px; align-items: center; }
+.nav-cta { margin-left: 12px; }
 
 .nav-toggle {
   display: none;
