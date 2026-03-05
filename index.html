@@ -548,7 +548,7 @@
 <!-- ═══════════ ANNOUNCEMENT BAR ═══════════ -->
 <div id="announce-bar">
   🎁 Free Download: Lead Management Checklist — 50 questions to find where your pipeline leaks.
-  <a href="#lead-magnet">Get it free →</a>
+  <a href="#lead-magnet" id="announce-cta">Get it free →</a>
 </div>
 
 <!-- ═══════════ NAV ═══════════ -->
@@ -558,6 +558,7 @@
       <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">
         <span class="nav-logo-text">Synapse Edge</span>
       </a>
+
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
         <li><a href="services.html">Services</a></li>
@@ -565,12 +566,16 @@
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About</a></li>
         <li class="nav-mobile-only"><a href="contact.html">Contact Us</a></li>
-        <li class="nav-mobile-only" style="margin-top:8px;"><a href="strategy-call.html" class="btn btn-primary" style="display:block;text-align:center;">Request a Strategy Call</a></li>
+        <li class="nav-mobile-only" style="margin-top:8px;">
+          <a href="strategy-call.html" class="btn btn-primary" style="display:block;text-align:center;">Request a Strategy Call</a>
+        </li>
       </ul>
+
       <div class="nav-cta" style="gap:10px;align-items:center;">
         <a href="contact.html" class="btn btn-secondary">Contact Us</a>
         <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
       </div>
+
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -579,6 +584,25 @@
 </nav>
 
 <main>
+
+<script>
+  // Smooth scroll for announcement CTA (with fallback if section id changes)
+  (function () {
+    const cta = document.getElementById('announce-cta');
+    if (!cta) return;
+
+    cta.addEventListener('click', function (e) {
+      const leadMagnet = document.getElementById('lead-magnet');
+      const fallback = document.getElementById('form');
+      const target = leadMagnet || fallback;
+
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  })();
+</script>
 
 <!-- ═══════════ HERO ═══════════ -->
 <section id="hero" aria-labelledby="hero-h1">
