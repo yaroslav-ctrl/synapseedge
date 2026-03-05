@@ -860,23 +860,28 @@
       box-shadow: 0 0 0 4px rgba(58,141,255,0.18);
     }
 
-    .lm-submit{
-      margin-top: 6px;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-    .lm-submit button{
-      height: 52px;
-      border-radius: 12px;
-      border: none;
-      background: #0b3a5a;
-      color: #fff;
-      font-weight: 800;
-      font-size: 15px;
-      cursor:pointer;
-      transition: transform .15s ease, filter .15s ease;
-    }
+    .lm-actions{
+    margin-top: 6px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .lm-actions button{
+    height: 52px;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    background: #0b3a5a;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    cursor:pointer;
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .lm-actions button:hover{
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
     .lm-submit button:hover{ transform: translateY(-1px); filter: brightness(1.05); }
     .lm-fineprint{
       display:flex;
@@ -931,17 +936,17 @@
 
         <!-- Formspree settings -->
         <form
-          id="lead-magnet-form"
-          class="lm-form"
-          action="https://formspree.io/f/mwvrevyl"
-          method="POST"
-          novalidate
-        >
-        
-        <input type="hidden" name="_subject" value="Checklist Request — synapseedge.com">
-        <input type="hidden" name="form_type" value="Lead Magnet Checklist Request">
-        <input type="hidden" name="source" value="Checklist Download — Homepage">
-        <input type="text" name="_gotcha" style="display:none">
+        id="lead-magnet-form"
+        class="lm-form"
+        action="https://formspree.io/f/mwvrevyl"
+        method="POST"
+        novalidate
+      >
+        <!-- Formspree meta -->
+        <input type="hidden" name="_subject" value="Checklist Request — synapseedge.com" />
+        <input type="hidden" name="form_type" value="Checklist Request" />
+        <input type="hidden" name="source" value="Checklist Download — Homepage" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
           <div class="lm-row-2">
             <div class="lm-field">
@@ -969,7 +974,7 @@
             <input type="text" id="lm-industry" name="industry" placeholder="e.g. Heavy Equipment, Industrial, Real Estate" />
           </div>
 
-          <div class="lm-submit">
+          <div class="lm-actions">
             <button type="submit">Send Me the Checklist →</button>
             <div id="lm-status" class="lm-status" aria-live="polite"></div>
             <div class="lm-fineprint">
