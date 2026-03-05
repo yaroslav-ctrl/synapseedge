@@ -3,24 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | Request an Executive Growth Audit — Synapse Edge</title>
-  <meta name="description" content="Request an Executive Growth Audit or book a strategy call with Synapse Edge. Structured 45-minute executive session — no obligation." />
-  <meta property="og:title" content="Contact Synapse Edge | Executive Growth Audit" />
-  <meta property="og:description" content="Request a structured B2B revenue audit or book a strategy call with Synapse Edge." />
+
+  <title>Contact Us | Synapse Edge</title>
+  <meta name="description" content="Request an Executive Growth Audit or send a message to Synapse Edge. We respond within one business day." />
+  <link rel="canonical" href="https://www.synapseedge.com/contact.html" />
+
+  <meta property="og:title" content="Contact Synapse Edge" />
+  <meta property="og:description" content="Request an Executive Growth Audit or send a message. Response within one business day." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://synapseedge.com/contact.html" />
-  <link rel="icon" href="/assets/favicon.ico" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Synapse Edge","url":"https://synapseedge.com","logo":"/assets/logo.svg","sameAs":[]}</script>
+  <meta property="og:url" content="https://www.synapseedge.com/contact.html" />
+
+  <!-- Favicon block -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"Synapse Edge","url":"https://synapseedge.com","logo":"/assets/logo.svg","sameAs":[]}
+  </script>
+
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Small page-specific helper styles ONLY (keeps global look) -->
+  <style>
+    /* Keep the contact form from looking too tall */
+    .contact-form-card textarea { min-height: 120px; }
+
+    /* Optional: show a small status message under the button */
+    .form-status {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: rgba(15, 30, 45, 0.75);
+      min-height: 1.2em;
+    }
+
+    /* Make required star match your primary color variable */
+    .req { color: var(--primary); }
+  </style>
 </head>
+
 <body>
 
+<!-- ═════════════════ NAVIGATION ═════════════════ -->
 <nav id="navbar" role="navigation" aria-label="Primary">
   <div class="container">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Synapse<span>Edge</span></a>
+
+      <a href="/" class="nav-logo">Synapse<span>Edge</span></a>
+
       <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="approach.html">Our Approach</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
@@ -28,100 +62,135 @@
         <li class="nav-mobile-only"><a href="contact.html">Contact Us</a></li>
         <li class="nav-mobile-only" style="margin-top:8px;"><a href="strategy-call.html" class="btn btn-primary" style="display:block;text-align:center;">Request a Strategy Call</a></li>
       </ul>
+
       <div class="nav-cta" style="gap:10px;align-items:center;">
-        <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+        <a href="contact.html" class="btn btn-secondary" aria-current="page">Contact Us</a>
         <a href="strategy-call.html" class="btn btn-primary">Request a Strategy Call</a>
       </div>
+
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
+
     </div>
   </div>
 </nav>
 
 <main>
 
+<!-- ═════════════════ HERO ═════════════════ -->
 <header class="page-hero" aria-labelledby="page-h1">
   <div class="container">
-    <span class="eyebrow">Get in Touch</span>
-    <h1 id="page-h1">Contact Us</h1>
-    <p>Request an Executive Growth Audit or book a strategy call. Every engagement begins with a structured 45-minute session — no obligation, no generic proposals.</p>
+    <span class="eyebrow">Executive Inquiry</span>
+    <h1 id="page-h1">Contact Synapse Edge</h1>
+    <p>Request an Executive Growth Audit or send a message. We respond within one business day.</p>
   </div>
 </header>
 
+<!-- ═════════════════ CONTACT ═════════════════ -->
 <section id="form" class="contact-section" aria-labelledby="contact-h2">
   <div class="container">
     <div class="contact-layout">
 
+      <!-- LEFT: Info (matches your existing pattern) -->
       <div class="contact-info fade-up">
-        <span class="eyebrow">Let's Talk</span>
-        <h2 id="contact-h2">Let's Architect Your Revenue System</h2>
+        <span class="eyebrow">Direct Contact</span>
+        <h2 id="contact-h2">Let’s Architect Your Revenue System</h2>
         <div class="rule"></div>
-        <p>We work with established B2B companies ready to build a structured revenue system. If your pipeline, CRM, search visibility, or sales process has gaps — we'll identify them and define a precise path forward.</p>
+
+        <p>
+          If your pipeline, CRM, or search visibility has structural gaps, we’ll help you identify constraints and define a clear execution path.
+        </p>
 
         <div class="contact-point">
-          <div class="label">Engagement Type</div>
-          <div class="value">Executive Growth Audit &amp; Revenue Strategy</div>
+          <div class="label">Email</div>
+          <div class="value">
+            <a href="/cdn-cgi/l/email-protection#6811091a071b04091e460a070f0c0911281b110609181b0d0d0c0f0d460b0705"><span class="__cf_email__" data-cfemail="e59c84978a96898493cb878a8281849ca5969c8b8495968080818280cb868a88">[email&#160;protected]</span></a>
+          </div>
         </div>
+
         <div class="contact-point">
-          <div class="label">Session Format</div>
-          <div class="value">Structured 45-minute executive session</div>
+          <div class="label">Phone</div>
+          <div class="value">
+            <a href="tel:+18782363229">878-236-3229</a>
+          </div>
         </div>
-        <div class="contact-point">
-          <div class="label">Commitment</div>
-          <div class="value">No obligation. No generic proposals.</div>
-        </div>
-        <div class="contact-point">
-          <div class="label">Best Fit</div>
-          <div class="value">Established B2B companies with complex sales cycles and leadership appetite for infrastructure-level growth.</div>
-        </div>
+
         <div class="contact-point">
           <div class="label">Response Time</div>
           <div class="value">Within one business day.</div>
         </div>
       </div>
 
+      <!-- RIGHT: Form (keeps your existing card style) -->
       <div class="contact-form-card fade-up">
-        <h3>Request Executive Growth Audit</h3>
-        <p class="form-intro">Complete the form below and we'll be in touch within one business day to schedule your session.</p>
+        <h3>Request an Executive Growth Audit</h3>
+        <p class="form-intro">
+          Name, email, and phone are required. Add a short message and we’ll follow up.
+        </p>
 
-        <form id="contact-form" action="#" method="post" novalidate>
+        <form
+          id="contact-form"
+          action="https://formspree.io/f/mjgeqpvq"
+          method="POST"
+          novalidate
+        >
+          <!-- Formspree settings -->
+          <input type="hidden" name="_subject" value="New Executive Growth Audit Request — synapseedge.com" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
+          <!-- Name -->
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">Name <span class="req">*</span></label>
             <input
               type="text"
               id="name"
               name="name"
               placeholder="Your full name"
               autocomplete="name"
+              required
             />
           </div>
 
+          <!-- Phone -->
           <div class="form-group">
-            <label for="email">Email <span style="color:var(--primary);">*</span></label>
+            <label for="phone">Phone <span class="req">*</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="(###) ###-####"
+              autocomplete="tel"
+              required
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email <span class="req">*</span></label>
             <input
               type="email"
               id="email"
               name="email"
               placeholder="your@company.com"
-              required
-              aria-required="true"
               autocomplete="email"
+              required
             />
           </div>
 
+          <!-- Company -->
           <div class="form-group">
             <label for="company">Company</label>
             <input
               type="text"
               id="company"
               name="company"
-              placeholder="Your company name"
+              placeholder="Company name"
               autocomplete="organization"
             />
           </div>
 
+          <!-- Industry -->
           <div class="form-group">
             <label for="industry">Industry</label>
             <input
@@ -132,34 +201,23 @@
             />
           </div>
 
+          <!-- Message -->
           <div class="form-group">
             <label for="message">Message</label>
             <textarea
               id="message"
               name="message"
-              placeholder="Tell us briefly about your business and what you're looking to address."
               rows="5"
+              placeholder="Briefly describe what you’d like to improve."
             ></textarea>
-          </div>
-
-          <div class="form-check">
-            <input type="checkbox" id="newsletter" name="newsletter" value="yes" />
-            <label for="newsletter">Sign up for our email list for updates, promotions, and more.</label>
           </div>
 
           <div class="form-submit">
             <button type="submit" class="btn btn-primary">Send</button>
+            <div id="form-status" class="form-status" aria-live="polite"></div>
           </div>
-
-          <p class="recaptcha-note">
-            This site is protected by reCAPTCHA and the Google
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-            and
-            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-            apply.
-          </p>
-
         </form>
+
       </div>
 
     </div>
@@ -168,6 +226,7 @@
 
 </main>
 
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer role="contentinfo">
   <div class="container">
     <div class="footer-grid">
@@ -175,40 +234,82 @@
         <div class="footer-brand-name">Synapse<span>Edge</span></div>
         <p class="footer-tagline">B2B Revenue Architecture. Built for established companies with complex commercial environments.</p>
       </div>
-      <div class="footer-col">
+            <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="services.html">Growth Strategy</a></li>
-          <li><a href="services.html">Sales Operations &amp; CRM</a></li>
-          <li><a href="services.html">SEO &amp; Local Authority</a></li>
-          <li><a href="services.html">Email Automation</a></li>
-          <li><a href="services.html">AI Infrastructure</a></li>
+          <li><a href="services.html#growth-strategy">Growth Strategy</a></li>
+          <li><a href="services.html#sales-ops-crm">Sales Operations &amp; CRM</a></li>
+          <li><a href="services.html#seo-local">SEO &amp; Local Authority</a></li>
+          <li><a href="services.html#marketing-automation">Marketing Automation</a></li>
+          <li><a href="services.html#ai-infrastructure">AI Infrastructure</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+
+            <div class="footer-col">
         <h4>Company</h4>
         <ul>
           <li><a href="about.html">About</a></li>
           <li><a href="approach.html">Our Approach</a></li>
           <li><a href="case-studies.html">Case Studies</a></li>
           <li><a href="contact.html">Contact Us</a></li>
-        <li><a href="strategy-call.html" class="btn btn-primary" style="display:block;text-align:center;">Request a Strategy Call</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+
+            <div class="footer-col">
         <h4>Contact</h4>
         <ul>
           <li><a href="contact.html">Request Audit</a></li>
-          <li><a href="contact.html#form">Book Strategy Call</a></li>
+          <li><a href="strategy-call.html">Book Strategy Call</a></li>
+          <li><a href="mailto:yaroslav.bogday@synapseedge.com">Send Email</a></li>
+          <li><a href="tel:+18782363229">Call +1 (878) 236-3229</a></li>
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
       <p>© 2026 Synapse Edge. All rights reserved.</p>
+      <p>Built for enterprise B2B growth infrastructure.</p>
     </div>
   </div>
 </footer>
 
-<script src="scripts.js"></script>
-</body>
-</html>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="scripts.js"></script>
+
+<!-- Formspree submit + redirect -->
+<script>
+  (function () {
+    const form = document.getElementById("contact-form");
+    const statusEl = document.getElementById("form-status");
+
+    function setStatus(msg) {
+      if (statusEl) statusEl.textContent = msg || "";
+    }
+
+    if (!form) return;
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      setStatus("Sending...");
+
+      // Ensure required fields present (HTML5 should handle too, but we keep UX consistent)
+      const requiredIds = ["name", "phone", "email"];
+      for (const id of requiredIds) {
+        const el = document.getElementById(id);
+        if (!el || !el.value.trim()) {
+          setStatus("Please fill in all required fields.");
+          if (el) el.focus();
+          return;
+        }
+      }
+
+      try {
+        const formData = new FormData(form);
+
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok) {
+          window.location.href = "/thank-yo
