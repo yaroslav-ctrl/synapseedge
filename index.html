@@ -28,8 +28,11 @@
   ═══════════════════════════════════════════════════ */
 
   /* ── Nav logo ── */
-  .nav-logo-img { height:36px; width:auto; display:block; flex-shrink:0; }
   .nav-logo { display:flex; align-items:center; }
+  .nav-logo-text {
+    font-size: 1.1rem; font-weight: 800; color: var(--primary);
+    letter-spacing: -0.02em; font-family: var(--font);
+  }
 
   /* ── Canvas ── */
   #hero-canvas {
@@ -512,10 +515,11 @@
   .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
   /* ════════ FOOTER LOGO ════════ */
-  .footer-logo-img {
-    height:30px; width:auto; display:block;
-    margin-bottom:14px; opacity:.85;
-    filter:brightness(0) invert(1);
+  .footer-logo-text {
+    display: block;
+    font-size: 1.1rem; font-weight: 800;
+    color: #fff; letter-spacing: -0.02em;
+    margin-bottom: 14px;
   }
 
   /* ════════ RESPONSIVE ════════ */
@@ -565,7 +569,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="/" class="nav-logo" aria-label="Synapse Edge — Home">
-        <img src="assets/logo.png" alt="Synapse Edge" class="nav-logo-img" />
+        <span class="nav-logo-text">Synapse Edge</span>
       </a>
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="/">Home</a></li>
@@ -1100,7 +1104,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <img src="assets/logo.png" alt="Synapse Edge" class="footer-logo-img" />
+        <span class="footer-logo-text">Synapse Edge</span>
         <p class="footer-tagline">B2B Revenue Architecture. Built for established companies navigating the digital and AI shift.</p>
       </div>
       <div class="footer-col">
