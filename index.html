@@ -936,111 +936,78 @@
 
         <!-- Formspree settings -->
         <form
-        id="lead-magnet-form"
-        class="lm-form"
-        action="https://formspree.io/f/mwvrevyl"
-        method="POST"
-        novalidate
-      >
-        <!-- Formspree meta -->
-        <input type="hidden" name="_subject" value="Checklist Request — synapseedge.com" />
-        <input type="hidden" name="form_type" value="Checklist Request" />
-        <input type="hidden" name="source" value="Checklist Download — Homepage" />
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+  id="lead-magnet-form"
+  class="lm-form"
+  action="https://formspree.io/f/mwvrevyl"
+  method="POST"
+>
+  <!-- Formspree meta -->
+  <input type="hidden" name="_subject" value="Checklist Request — synapseedge.com" />
+  <input type="hidden" name="form_type" value="Checklist Request" />
+  <input type="hidden" name="source" value="Checklist Download — Homepage" />
 
-          <div class="lm-row-2">
-            <div class="lm-field">
-              <label for="lm-first">First Name</label>
-              <input type="text" id="lm-first" name="first_name" placeholder="John" autocomplete="given-name" required />
-            </div>
-            <div class="lm-field">
-              <label for="lm-last">Last Name</label>
-              <input type="text" id="lm-last" name="last_name" placeholder="Smith" autocomplete="family-name" required />
-            </div>
-          </div>
+  <!-- Redirect back to the same section after submit -->
+  <input type="hidden" name="_next" value="https://www.synapseedge.com/?lm=success#lead-magnet" />
 
-          <div class="lm-field">
-            <label for="lm-email">Work Email</label>
-            <input type="email" id="lm-email" name="email" placeholder="john@company.com" autocomplete="email" required />
-          </div>
+  <!-- Honeypot -->
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
-          <div class="lm-field">
-            <label for="lm-company">Company Name</label>
-            <input type="text" id="lm-company" name="company" placeholder="Acme Corp" autocomplete="organization" />
-          </div>
-
-          <div class="lm-field">
-            <label for="lm-industry">Industry</label>
-            <input type="text" id="lm-industry" name="industry" placeholder="e.g. Heavy Equipment, Industrial, Real Estate" />
-          </div>
-
-          <div class="lm-actions">
-            <button type="submit">Send Me the Checklist →</button>
-            <div id="lm-status" class="lm-status" aria-live="polite"></div>
-            <div class="lm-fineprint">
-              <span aria-hidden="true">🔒</span>
-              <span>No spam. Unsubscribe anytime. Your data is safe.</span>
-            </div>
-          </div>
-        </form>
-      </div>
-
+  <div class="lm-row-2">
+    <div class="lm-field">
+      <label for="lm-first">First Name</label>
+      <input type="text" id="lm-first" name="first_name" placeholder="John" autocomplete="given-name" required />
+    </div>
+    <div class="lm-field">
+      <label for="lm-last">Last Name</label>
+      <input type="text" id="lm-last" name="last_name" placeholder="Smith" autocomplete="family-name" required />
     </div>
   </div>
 
- <script>
-(function () {
-  const form = document.getElementById('lead-magnet-form');
-  const status = document.getElementById('lm-status');
-  if (!form || !status) return;
+  <div class="lm-field">
+    <label for="lm-email">Work Email</label>
+    <input type="email" id="lm-email" name="email" placeholder="john@company.com" autocomplete="email" required />
+  </div>
 
-  let submitting = false;
+  <div class="lm-field">
+    <label for="lm-company">Company Name</label>
+    <input type="text" id="lm-company" name="company" placeholder="Acme Corp" autocomplete="organization" />
+  </div>
 
-  form.addEventListener('submit', async function (e) {
-    if (submitting) return; // prevent double clicks
-    submitting = true;
+  <div class="lm-field">
+    <label for="lm-industry">Industry</label>
+    <input type="text" id="lm-industry" name="industry" placeholder="e.g. Heavy Equipment, Industrial, Real Estate" />
+  </div>
 
-    const btn = form.querySelector('button[type="submit"]');
-    const originalBtnText = btn ? btn.textContent : '';
+  <div class="lm-submit">
+    <button type="submit">Send Me the Checklist →</button>
 
-    // Always show feedback
-    status.textContent = 'Sending...';
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+    <!-- Bigger success panel (hidden by default) -->
+    <div id="lm-success" class="lm-status" style="display:none; padding:10px 12px; border-radius:10px; background:rgba(15,59,95,0.06);">
+      ✅ Submitted. Check your inbox in 1–2 minutes.
+    </div>
 
-    // If fetch isn't available, do normal submit
-    if (!window.fetch) return;
+    <div class="lm-fineprint">
+      <span aria-hidden="true">🔒</span>
+      <span>No spam. Unsubscribe anytime. Your data is safe.</span>
+    </div>
+  </div>
+</form>
 
-    e.preventDefault();
+<script>
+  // After redirect (?lm=success), show a BIG success message
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('lm') !== 'success') return;
 
-    try {
-      const data = new FormData(form);
+    const success = document.getElementById('lm-success');
+    if (success) success.style.display = 'block';
 
-      // Try AJAX submit first
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' },
-      });
-
-      if (res.ok) {
-        status.textContent = '✅ Submitted. Check your inbox in 1–2 minutes.';
-        form.reset();
-        if (btn) { btn.disabled = false; btn.textContent = originalBtnText; }
-        submitting = false;
-        return;
-      }
-
-      // If Formspree rejected (400/403/etc), fall back to normal submit
-      status.textContent = 'Submitting...';
-      HTMLFormElement.prototype.submit.call(form);
-
-    } catch (err) {
-      // Network/CORS/adblock/etc — fall back to normal submit
-      status.textContent = 'Submitting...';
-      HTMLFormElement.prototype.submit.call(form);
+    // Optional: remove the query param from the URL (clean look)
+    if (history && history.replaceState) {
+      const clean = window.location.origin + window.location.pathname + '#lead-magnet';
+      history.replaceState({}, document.title, clean);
     }
-  });
-})();
+  })();
 </script>
 
 <!-- ═══════════ STRUCTURAL PROBLEM ═══════════ -->
