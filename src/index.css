@@ -1157,27 +1157,6 @@ footer {
   z-index: 0;
 }
 
-/* Announcement bar */
-#announce-bar {
-  background: var(--primary);
-  color: #fff;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  position: relative;
-  z-index: 1000;
-}
-#announce-bar a {
-  color: #7ecef5;
-  font-weight: 700;
-  text-decoration: underline;
-  margin-left: 8px;
-  cursor: pointer;
-}
-#announce-bar a:hover { color: #fff; }
-
 /* Hero (homepage override) */
 #hero {
   position: relative;
@@ -1962,8 +1941,6 @@ footer {
   .lm-bullets li { grid-template-columns: 22px 1fr; }
   .lm-bullets strong, .lm-desc { grid-column: 2; }
 
-  /* Announce bar */
-  #announce-bar { font-size: 0.75rem; padding: 8px 16px; }
   .nav-logo-text { font-size: 1rem; }
 
   /* Case studies v2 */

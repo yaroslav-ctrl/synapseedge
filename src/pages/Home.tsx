@@ -129,12 +129,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Announcement bar */}
-      <div id="announce-bar">
-        🎁 Free Download: Lead Management Checklist — 50 questions to find where your pipeline leaks.
-        <a href="#lead-magnet" onClick={scrollToLeadMagnet}>Get it free →</a>
-      </div>
-
       {/* Hero */}
       <section id="hero" aria-labelledby="hero-h1">
         <HeroCanvas />
