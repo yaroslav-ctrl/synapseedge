@@ -88,7 +88,7 @@ export default function Contact() {
                 <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
                 <div className="form-group">
-                  <label htmlFor="name">Name <span className="req" style={{ color: 'var(--primary)' }}>*</span></label>
+                  <label htmlFor="name">Name <span className="req">*</span></label>
                   <input
                     type="text"
                     id="name"
@@ -100,7 +100,7 @@ export default function Contact() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="phone">Phone <span className="req" style={{ color: 'var(--primary)' }}>*</span></label>
+                  <label htmlFor="phone">Phone <span className="req">*</span></label>
                   <input
                     type="tel"
                     id="phone"
@@ -112,7 +112,7 @@ export default function Contact() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">Email <span className="req" style={{ color: 'var(--primary)' }}>*</span></label>
+                  <label htmlFor="email">Email <span className="req">*</span></label>
                   <input
                     type="email"
                     id="email"
@@ -156,15 +156,9 @@ export default function Contact() {
 
                 <div className="form-submit">
                   <button type="submit" className="btn btn-primary">Send</button>
-                  {status && (
-                    <div
-                      id="form-status"
-                      style={{ marginTop: '10px', fontSize: '0.95rem', color: 'rgba(15,30,45,0.75)', minHeight: '1.2em' }}
-                      aria-live="polite"
-                    >
-                      {status}
-                    </div>
-                  )}
+                  <div id="form-status" className="form-status" aria-live="polite">
+                    {status}
+                  </div>
                 </div>
               </form>
             </div>
